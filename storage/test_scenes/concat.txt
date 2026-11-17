@@ -1,0 +1,9 @@
+file 'F:/Projects/beauty-marketing-agent/storage/test_scenes/s_1.jpg'
+duration 1.08
+file 'F:/Projects/beauty-marketing-agent/storage/test_scenes/s_2.jpg'
+duration 1.08
+file 'F:/Projects/beauty-marketing-agent/storage/test_scenes/s_3.jpg'
+duration 1.08
+file 'F:/Projects/beauty-marketing-agent/storage/test_scenes/s_4.jpg'
+duration 1.08
+file 'F:/Projects/beauty-marketing-agent/storage/test_scenes/s_4.jpg'

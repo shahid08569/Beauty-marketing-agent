@@ -1,0 +1,59 @@
+{
+  "brand_name": "Lumière Glow & Care",
+  "market": "Pakistan",
+  "supported_languages": ["roman_urdu", "urdu", "english"],
+  "categories": [
+    {
+      "id": "beauty_skincare",
+      "name": "Beauty & Skincare",
+      "default_actions": ["face_application", "hand_texture", "glow_test"]
+    },
+    {
+      "id": "body_care",
+      "name": "Body Care & Fragrance",
+      "default_actions": ["hand_application", "fragrance_spritz", "body_glow"]
+    },
+    {
+      "id": "clothing_fashion",
+      "name": "Clothing & Virtual Try-On",
+      "default_actions": ["fashion_walk", "fabric_close_up", "full_look"]
+    }
+  ],
+  "hook_formulas": [
+    {
+      "id": "curiosity_gap",
+      "template_ur": "Kya aapko pata hai 90% log {product_type} ghalat tareeqe se use karte hain?",
+      "template_en": "Are you making this common mistake with your {product_type}?"
+    },
+    {
+      "id": "problem_pain_point",
+      "template_ur": "Agar aapke chehre par {skin_problem} khatam nahi ho rahi, toh yeh 1 step routine dekhein.",
+      "template_en": "If you struggle with stubborn {skin_problem}, stop scrolling right now."
+    },
+    {
+      "id": "transformation_glow",
+      "template_ur": "Glass skin aur natural glow ke liye sirf yeh ek secret product kaafi hai.",
+      "template_en": "The exact product that gave me that effortless glass-skin glow."
+    },
+    {
+      "id": "mens_grooming_appeal",
+      "template_ur": "Larkon ke liye 30-second daily grooming hack jo aapko foran 10x sharp banaye.",
+      "template_en": "A 30-second grooming hack every man needs for clean, sharp skin."
+    },
+    {
+      "id": "fashion_vton",
+      "template_ur": "Yeh dress pehan kar aapki personality kitni royal lagegi? Khud dekh lijiye!",
+      "template_en": "See how stunning this exact outfit looks in real motion."
+    }
+  ],
+  "voices": {
+    "roman_urdu": {
+      "female": "ur-PK-UzmaNeural",
+      "male": "ur-PK-AsadNeural"
+    },
+    "english": {
+      "female": "en-US-JennyNeural",
+      "male": "en-US-GuyNeural"
+    }
+  }
+}

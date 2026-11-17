@@ -1,0 +1,25 @@
+{
+  "prohibited_words": [
+    "cure",
+    "treat",
+    "guaranteed",
+    "100%",
+    "miracle",
+    "permanent result",
+    "instant gora",
+    "jadoyi",
+    "medical fix",
+    "zero side effect"
+  ],
+  "required_disclosures": {
+    "ai_generated": "#AI #AIAvatar #VirtualModel",
+    "brand_tag": "#SkincareRoutine #BeautyHacks #GlowUp #PakistanBeauty"
+  },
+  "video_specs": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "min_duration": 15,
+    "max_duration": 45
+  }
+}

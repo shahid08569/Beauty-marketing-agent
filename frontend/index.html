@@ -1,0 +1,2513 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lumière • AI Marketing Studio (Ink Wash)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="ink-wash-theme.css">
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg);
+      color: var(--text-primary);
+      transition: background-color 0.2s ease, color 0.2s ease;
+    }
+    .serif-title { font-family: 'Playfair Display', serif; }
+    
+    /* Ink Wash Neutral Sidebar */
+    .sidebar-inkwash {
+      background-color: var(--surface-alt);
+      border-right: 1px solid var(--border);
+      color: var(--text-primary);
+    }
+    .sidebar-link {
+      transition: all 0.15s ease-in-out;
+      color: var(--text-secondary);
+      border: 1px solid transparent;
+    }
+    .sidebar-link:hover {
+      background-color: var(--surface);
+      color: var(--text-primary);
+      border-color: var(--border);
+    }
+    .sidebar-active {
+      background-color: var(--surface) !important;
+      color: var(--accent) !important;
+      font-weight: 700;
+      border-color: var(--border) !important;
+      box-shadow: var(--shadow-sm);
+    }
+    
+    /* Clean Minimal Cards (Gallery Feel) */
+    .clean-card {
+      background-color: var(--surface);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+    .clean-card:hover {
+      box-shadow: var(--shadow-md);
+      border-color: var(--border);
+    }
+
+    /* Primary Button (Accent ONLY) */
+    .btn-gradient,
+    .btn-primary-accent {
+      background-color: var(--accent);
+      color: var(--accent-contrast);
+      box-shadow: var(--shadow-sm);
+      border: 1px solid transparent;
+      transition: background-color 0.15s ease, transform 0.05s ease;
+    }
+    .btn-gradient:hover,
+    .btn-primary-accent:hover {
+      background-color: var(--accent-hover);
+    }
+    .btn-gradient:active,
+    .btn-primary-accent:active {
+      transform: scale(0.99);
+    }
+    
+    /* Active Soundwave Playing Animation (Accent ONLY) */
+    @keyframes soundwave {
+      0%, 100% { height: 4px; }
+      50% { height: 14px; }
+    }
+    .wave-bar-1 { animation: soundwave 0.7s ease-in-out infinite 0.1s; background-color: var(--accent) !important; }
+    .wave-bar-2 { animation: soundwave 0.7s ease-in-out infinite 0.35s; background-color: var(--accent) !important; }
+    .wave-bar-3 { animation: soundwave 0.7s ease-in-out infinite 0.2s; background-color: var(--accent) !important; }
+    .wave-bar-4 { animation: soundwave 0.7s ease-in-out infinite 0.45s; background-color: var(--accent) !important; }
+
+    /* Skeleton Shimmer Animation */
+    @keyframes shimmer {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+    .skeleton-box {
+      background: linear-gradient(90deg, var(--surface) 25%, var(--surface-alt) 50%, var(--surface) 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.4s ease-in-out infinite;
+      border: 1px solid var(--border);
+    }
+
+    /* Toast Notification Animation */
+    @keyframes toastSlideUp {
+      from { transform: translateY(16px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    .toast-anim {
+      animation: toastSlideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+  </style>
+</head>
+<body class="flex h-screen overflow-hidden">
+
+  <!-- LEFT SIDEBAR (Ink Wash Gallery Neutral) -->
+  <aside class="w-64 sidebar-inkwash flex flex-col justify-between p-5 flex-shrink-0 z-20">
+    <div>
+      <!-- Brand Logo -->
+      <div class="flex items-center gap-3 pb-6 border-b border-[var(--border)]">
+        <div class="w-10 h-10 rounded-xl bg-[var(--surface)] text-[var(--accent)] border border-[var(--border)] flex items-center justify-center font-extrabold text-xl shadow-xs">
+          L
+        </div>
+        <div>
+          <h2 class="serif-title text-xl font-bold tracking-tight text-[var(--text-primary)]">Lumière AI</h2>
+          <p class="text-[11px] text-[var(--text-secondary)] font-medium">Marketing Agent Studio</p>
+        </div>
+      </div>
+
+      <!-- Navigation Links -->
+      <nav class="mt-6 space-y-1.5">
+        <button onclick="switchTab('create')" id="nav-create" class="sidebar-link sidebar-active w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold transition text-left">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+          <span>Create Video Reel</span>
+        </button>
+
+        <button onclick="switchTab('vault')" id="nav-vault" class="sidebar-link w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition text-left">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"/></svg>
+          <span>Content Vault</span>
+        </button>
+
+        <button onclick="switchTab('voices')" id="nav-voices" class="sidebar-link w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition text-left">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/></svg>
+          <span>Voice & Accent Lab</span>
+        </button>
+
+        <button onclick="switchTab('distribution')" id="nav-distribution" class="sidebar-link w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition text-left">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+          <span>Channels & Posting</span>
+        </button>
+
+        <button onclick="switchTab('settings')" id="nav-settings" class="sidebar-link w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition text-left">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+          <span>QC & Compliance</span>
+        </button>
+      </nav>
+    </div>
+
+    <!-- Bottom Status -->
+    <div class="pt-4 border-t border-[var(--border)]">
+      <div class="bg-[var(--surface)] border border-[var(--border)] p-3 rounded-2xl shadow-xs">
+        <div class="flex items-center justify-between text-xs font-semibold">
+          <span class="text-[var(--text-primary)]">Engine Status</span>
+          <span class="flex items-center gap-1.5 text-[var(--success)]">
+            <span class="w-2 h-2 rounded-full bg-[var(--success)] animate-pulse"></span> Active
+          </span>
+        </div>
+        <p class="text-[11px] text-[var(--text-secondary)] mt-1">FFmpeg 9.0 • Free Neural Voices</p>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN RIGHT CONTENT -->
+  <main class="flex-1 flex flex-col h-full overflow-y-auto bg-[var(--bg)]">
+
+    <!-- Top Bar -->
+    <header class="bg-[var(--surface)] border-b border-[var(--border)] px-8 py-4 flex items-center justify-between sticky top-0 z-10 shadow-xs">
+      <div>
+        <h1 id="pageHeading" class="text-xl font-bold text-[var(--text-primary)]">Autonomous Video Creation Studio</h1>
+        <p class="text-xs text-[var(--text-secondary)]">Generate 30s-40s vertical reels for Instagram, TikTok, Shorts & Facebook</p>
+      </div>
+      <div class="flex items-center gap-2.5">
+        <span class="px-3 py-1 rounded-full text-xs font-semibold bg-[var(--surface-alt)] text-[var(--text-secondary)] border border-[var(--border)]">
+          Audience: Pakistan
+        </span>
+        <span class="px-3 py-1 rounded-full text-xs font-semibold bg-[var(--surface-alt)] text-[var(--text-secondary)] border border-[var(--border)]">
+          Native Voice & Script
+        </span>
+
+        <!-- Light / Dark Mode Toggle Button (Ink Wash Specification) -->
+        <button type="button" onclick="toggleTheme()" id="themeToggleBtn" class="px-3 py-1.5 rounded-xl border border-[var(--border)] bg-[var(--surface)] hover:bg-[var(--surface-alt)] text-[var(--text-primary)] text-xs font-semibold flex items-center gap-1.5 transition shadow-xs" title="Toggle Light/Dark Theme">
+          <span id="themeToggleIcon">🌙</span>
+          <span id="themeToggleText">Dark Mode</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- CONTENT BODY -->
+    <div class="p-6 md:p-8 max-w-7xl w-full mx-auto space-y-6">
+
+      <!-- LIVE VIRAL TREND RADAR -->
+      <div class="clean-card rounded-3xl p-6 border border-[var(--border)] bg-[var(--surface)] space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[var(--border-subtle)] pb-3">
+          <div>
+            <div class="flex items-center gap-2">
+              <h3 class="text-sm font-bold text-[var(--text-primary)]">Live Viral Trend Radar</h3>
+              <span class="px-2 py-0.5 text-[10px] uppercase tracking-wider bg-[var(--accent)] text-[var(--accent-contrast)] font-bold rounded-full">Live Trends</span>
+            </div>
+            <p class="text-xs text-[var(--text-secondary)] mt-0.5">Verified trends on TikTok & Reels in Pakistan (<span id="radarSeason" class="font-semibold text-[var(--text-primary)]">Autumn / Wedding Season</span>)</p>
+          </div>
+          <!-- Filter Tabs -->
+          <div class="flex flex-wrap gap-1.5 text-xs">
+            <button type="button" onclick="switchRadarTab('women_skincare')" id="tab_women_skincare" class="px-3 py-1.5 rounded-xl font-semibold bg-[var(--surface-alt)] text-[var(--text-primary)] border border-[var(--text-primary)] shadow-xs transition">Women Skincare</button>
+            <button type="button" onclick="switchRadarTab('men_grooming')" id="tab_men_grooming" class="px-3 py-1.5 rounded-xl font-semibold bg-[var(--surface)] text-[var(--text-secondary)] border border-[var(--border)] hover:bg-[var(--surface-alt)] transition">Men Grooming</button>
+            <button type="button" onclick="switchRadarTab('women_fashion')" id="tab_women_fashion" class="px-3 py-1.5 rounded-xl font-semibold bg-[var(--surface)] text-[var(--text-secondary)] border border-[var(--border)] hover:bg-[var(--surface-alt)] transition">Women Fashion</button>
+            <button type="button" onclick="switchRadarTab('men_fashion')" id="tab_men_fashion" class="px-3 py-1.5 rounded-xl font-semibold bg-[var(--surface)] text-[var(--text-secondary)] border border-[var(--border)] hover:bg-[var(--surface-alt)] transition">Men Fashion</button>
+          </div>
+        </div>
+
+        <!-- Recency / Date Range Controls -->
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 p-3 bg-[var(--surface-alt)] rounded-2xl border border-[var(--border)] text-xs">
+          <div class="flex flex-wrap items-center gap-2">
+            <span class="font-semibold text-[var(--text-primary)]">Time Window:</span>
+            <div class="flex flex-wrap gap-1.5">
+              <button type="button" onclick="setRadarDateRange('last_24_hours')" id="rdr_btn_24h" class="px-3 py-1 rounded-lg text-xs font-semibold bg-[var(--surface)] text-[var(--text-secondary)] border border-[var(--border)] hover:bg-[var(--surface-alt)] transition">Past 24 Hours</button>
+              <button type="button" onclick="setRadarDateRange('last_7_days')" id="rdr_btn_7d" class="px-3 py-1 rounded-lg text-xs font-semibold bg-[var(--surface)] text-[var(--text-primary)] border border-[var(--text-primary)] shadow-xs transition">Past 7 Days (1 Week)</button>
+              <button type="button" onclick="setRadarDateRange('last_30_days')" id="rdr_btn_30d" class="px-3 py-1 rounded-lg text-xs font-semibold bg-[var(--surface)] text-[var(--text-secondary)] border border-[var(--border)] hover:bg-[var(--surface-alt)] transition">Past 30 Days</button>
+              <button type="button" onclick="toggleRadarCustomDate()" id="rdr_btn_custom" class="px-3 py-1 rounded-lg text-xs font-semibold bg-[var(--surface)] text-[var(--text-secondary)] border border-[var(--border)] hover:bg-[var(--surface-alt)] transition">Custom Date Selection</button>
+            </div>
+          </div>
+          <span id="radarDateBadge" class="px-3 py-1 rounded-xl bg-[var(--surface)] border border-[var(--border)] text-[var(--text-primary)] font-semibold text-xs shadow-xs self-start md:self-auto">
+            Past 7 Days (Last 1 Week from Today)
+          </span>
+        </div>
+
+        <!-- Custom Date Range Inputs (Collapsible) -->
+        <div id="radarCustomDateBox" class="hidden p-3.5 rounded-2xl bg-[var(--surface)] border border-[var(--border)] flex flex-wrap items-center gap-3 text-xs shadow-sm">
+          <div class="flex items-center gap-2">
+            <label class="font-semibold text-[var(--text-secondary)]">Start Date:</label>
+            <input type="date" id="rdr_start_date" class="p-2 rounded-xl border border-[var(--border)] text-xs text-[var(--text-primary)] bg-[var(--surface-alt)]">
+          </div>
+          <div class="flex items-center gap-2">
+            <label class="font-semibold text-[var(--text-secondary)]">End Date:</label>
+            <input type="date" id="rdr_end_date" class="p-2 rounded-xl border border-[var(--border)] text-xs text-[var(--text-primary)] bg-[var(--surface-alt)]">
+          </div>
+          <button type="button" onclick="applyCustomRadarDate()" class="px-4 py-2 rounded-xl border border-[var(--border)] bg-[var(--surface-alt)] text-[var(--text-primary)] font-semibold hover:border-[var(--text-primary)] transition">
+            Apply Custom Window
+          </button>
+        </div>
+
+        <!-- Trend Cards Grid -->
+        <div id="radarCardsGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+          <!-- Populated dynamically via JS -->
+        </div>
+      </div>
+
+      <!-- VIEW 1: CREATE REEL (4-STEP WIZARD) -->
+      <div id="view-create" class="space-y-6">
+
+        <!-- 4-STEP WIZARD PROGRESS STEPPER BAR -->
+        <div class="clean-card rounded-2xl p-4 bg-[var(--surface)] border border-[var(--border)]">
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-3 items-center">
+            
+            <!-- Step 1 Button -->
+            <button type="button" onclick="goToWizardStep(1)" id="step-nav-1" class="flex items-center gap-3 p-2.5 rounded-xl text-left transition bg-[var(--surface-alt)] border border-[var(--text-primary)]">
+              <div id="step-bubble-1" class="w-8 h-8 rounded-lg flex items-center justify-center font-bold text-xs bg-[var(--accent)] text-[var(--accent-contrast)] shadow-xs">1</div>
+              <div>
+                <p class="text-xs font-bold text-[var(--text-primary)]">1. Product Setup</p>
+                <p class="text-[10px] text-[var(--text-secondary)]">Prompt & Photo</p>
+              </div>
+            </button>
+
+            <!-- Step 2 Button -->
+            <button type="button" onclick="goToWizardStep(2)" id="step-nav-2" class="flex items-center gap-3 p-2.5 rounded-xl text-left transition opacity-60 hover:opacity-100 bg-[var(--surface)] border border-[var(--border)]">
+              <div id="step-bubble-2" class="w-8 h-8 rounded-lg flex items-center justify-center font-bold text-xs bg-[var(--surface-alt)] text-[var(--text-secondary)]">2</div>
+              <div>
+                <p class="text-xs font-bold text-[var(--text-primary)]">2. Roman Urdu Script</p>
+                <p class="text-[10px] text-[var(--text-secondary)]">Review & Audio Preview</p>
+              </div>
+            </button>
+
+            <!-- Step 3 Button -->
+            <button type="button" onclick="goToWizardStep(3)" id="step-nav-3" class="flex items-center gap-3 p-2.5 rounded-xl text-left transition opacity-60 hover:opacity-100 bg-[var(--surface)] border border-[var(--border)]">
+              <div id="step-bubble-3" class="w-8 h-8 rounded-lg flex items-center justify-center font-bold text-xs bg-[var(--surface-alt)] text-[var(--text-secondary)]">3</div>
+              <div>
+                <p class="text-xs font-bold text-[var(--text-primary)]">3. 3D Supermodel</p>
+                <p class="text-[10px] text-[var(--text-secondary)]">Live Rehearsal & Style</p>
+              </div>
+            </button>
+
+            <!-- Step 4 Button -->
+            <button type="button" onclick="goToWizardStep(4)" id="step-nav-4" class="flex items-center gap-3 p-2.5 rounded-xl text-left transition opacity-60 hover:opacity-100 bg-[var(--surface)] border border-[var(--border)]">
+              <div id="step-bubble-4" class="w-8 h-8 rounded-lg flex items-center justify-center font-bold text-xs bg-[var(--surface-alt)] text-[var(--text-secondary)]">4</div>
+              <div>
+                <p class="text-xs font-bold text-[var(--text-primary)]">4. Cinema Reel</p>
+                <p class="text-[10px] text-[var(--text-secondary)]">1080x1920 MP4 & Vault</p>
+              </div>
+            </button>
+          </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- STEP 1: PRODUCT SETUP                      -->
+        <!-- ========================================== -->
+        <div id="wizard-step-1" class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+          <!-- Left Column: Form -->
+          <div class="lg:col-span-7 clean-card rounded-3xl p-6 md:p-7 space-y-5">
+            <div class="flex items-center justify-between border-b border-[var(--border-subtle)] pb-3">
+              <div>
+                <h2 class="text-base font-bold text-[var(--text-primary)]">Step 1: Product & Campaign Setup</h2>
+                <p class="text-xs text-[var(--text-secondary)]">Enter product details, upload photo, and generate Roman Urdu script</p>
+              </div>
+              <span class="text-xs font-semibold text-[var(--text-secondary)] bg-[var(--surface-alt)] px-2.5 py-1 rounded-lg border border-[var(--border)]">
+                Step 1 of 4
+              </span>
+            </div>
+
+            <!-- Quick Starters -->
+            <div>
+              <label class="block text-xs font-semibold text-[var(--text-secondary)] mb-1.5">Quick Starters (One-Click Preload):</label>
+              <div class="flex flex-wrap gap-2 text-xs">
+                <button type="button" onclick="setPreset('Dove Beauty Cream Bar Soap - moisturizes skin with 1/4 hydrating cream and gives radiant soft glow', 'beauty_skincare', 'women', 'urdu', 'face_application', 'swara_influencer')" class="px-3 py-1 rounded-lg bg-[var(--surface-alt)] text-[var(--text-primary)] hover:border-[var(--text-primary)] border border-[var(--border)] font-medium transition cursor-pointer">
+                  🧼 Dove Beauty Bar (Urdu Skincare)
+                </button>
+                <button type="button" onclick="setPreset('Garnier Bright Complete Vitamin C Serum - fades dark spots in 3 days with yuzu lemon', 'beauty_skincare', 'women', 'urdu', 'face_application', 'swara_influencer')" class="px-3 py-1 rounded-lg bg-[var(--surface-alt)] text-[var(--text-primary)] hover:border-[var(--text-primary)] border border-[var(--border)] font-medium transition cursor-pointer">
+                  ✨ Garnier Vitamin C Glow (Urdu)
+                </button>
+                <button type="button" onclick="setPreset('Garnier Men Charcoal Oil-Control Face Wash - deep cleanses and removes pollution and oil', 'beauty_skincare', 'men', 'urdu', 'beard_grooming', 'asad_pk')" class="px-3 py-1 rounded-lg bg-[var(--surface-alt)] text-[var(--text-primary)] hover:border-[var(--text-primary)] border border-[var(--border)] font-medium transition cursor-pointer">
+                  🧔 Men Charcoal Face Wash (Urdu)
+                </button>
+                <button type="button" onclick="setPreset('Royal Embroidered Velvet Winter Kurti - premium festive designer wear with intricate tilla work', 'clothing_fashion', 'women', 'urdu', 'fashion_walk', 'swara_influencer')" class="px-3 py-1 rounded-lg bg-[var(--surface-alt)] text-[var(--text-primary)] hover:border-[var(--text-primary)] border border-[var(--border)] font-medium transition cursor-pointer">
+                  👗 Embroidered Velvet Kurti (Fashion)
+                </button>
+              </div>
+            </div>
+
+            <div class="space-y-4">
+              <div>
+                <label class="block text-xs font-bold text-[var(--text-primary)] mb-1">Product Name / Prompt / Campaign Topic</label>
+                <textarea id="in_prompt" rows="3" required placeholder="Type product name (e.g. Dove Beauty Cream Bar) or clothing description..." class="w-full p-3 rounded-2xl border border-[var(--border)] text-sm focus:ring-2 focus:ring-[var(--accent)] focus:outline-none text-[var(--text-primary)] placeholder-[var(--text-secondary)] bg-[var(--surface-alt)]">Dove Beauty Cream Bar Soap - moisturizes skin with 1/4 hydrating cream and gives radiant soft glow</textarea>
+              </div>
+
+              <!-- Real Product Photo / Image Asset -->
+              <div class="space-y-1.5">
+                <div class="flex items-center justify-between">
+                  <label class="block text-xs font-bold text-[var(--text-primary)]">Real Product Photo (Upload or Paste Link)</label>
+                  <span class="text-[10px] font-bold text-[var(--accent)] bg-[var(--surface-alt)] px-2 py-0.5 rounded border border-[var(--border)]">Overlaid on 1080x1920 Reel</span>
+                </div>
+                
+                <!-- Drag & Drop Zone -->
+                <div id="productImageDropzone" class="relative border-2 border-dashed border-[var(--border)] hover:border-[var(--accent)] bg-[var(--surface-alt)] rounded-2xl p-4 transition text-center cursor-pointer group">
+                  <input type="file" id="in_product_file" accept="image/png, image/jpeg, image/jpg, image/webp" class="hidden" onchange="handleProductFileSelect(event)">
+                  
+                  <!-- Empty state -->
+                  <div id="dropzoneEmpty" onclick="document.getElementById('in_product_file').click()">
+                    <div class="w-10 h-10 mx-auto rounded-xl bg-[var(--surface)] shadow-xs border border-[var(--border)] flex items-center justify-center text-[var(--text-secondary)] group-hover:text-[var(--accent)] transition">
+                      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                    </div>
+                    <p class="text-xs font-bold text-[var(--text-primary)] mt-2">Upload Real Product Photo (PNG / JPG / WebP)</p>
+                    <p class="text-[10px] text-[var(--text-secondary)] mt-0.5">Click to browse soap, bottle, dress, or serum photo</p>
+                  </div>
+                  
+                  <!-- Preview state (hidden by default) -->
+                  <div id="dropzonePreview" class="hidden flex items-center justify-between gap-3 text-left">
+                    <div class="flex items-center gap-3">
+                      <div class="w-14 h-14 rounded-xl overflow-hidden bg-white border border-[var(--border)] shadow-xs flex-shrink-0">
+                        <img id="imgThumbnailPreview" src="" class="w-full h-full object-cover">
+                      </div>
+                      <div>
+                        <p id="imgFileName" class="text-xs font-bold text-[var(--text-primary)] truncate max-w-[200px]">product_photo.jpg</p>
+                        <p class="text-[10px] text-[var(--success)] font-semibold flex items-center gap-1 mt-0.5">
+                          <span class="w-1.5 h-1.5 rounded-full bg-[var(--success)]"></span> Ready for video canvas
+                        </p>
+                      </div>
+                    </div>
+                    <button type="button" onclick="removeProductImage(event)" class="p-1.5 rounded-xl text-[var(--text-secondary)] hover:text-[var(--error)] transition cursor-pointer" title="Remove Photo">
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- URL input -->
+                <div>
+                  <input type="url" id="in_product_url" oninput="handleProductUrlInput(this.value)" placeholder="Or paste Daraz / Shopify / Website product image URL..." class="w-full p-2.5 rounded-xl border border-[var(--border)] text-xs text-[var(--text-primary)] bg-[var(--surface-alt)] placeholder-[var(--text-secondary)] focus:outline-none focus:border-[var(--accent)]">
+                </div>
+              </div>
+
+              <!-- Category & Audience -->
+              <div class="grid grid-cols-2 gap-3">
+                <div>
+                  <label class="block text-xs font-bold text-[var(--text-primary)] mb-1">Category</label>
+                  <select id="in_category" class="w-full p-2.5 rounded-xl border border-[var(--border)] text-xs text-[var(--text-primary)] bg-[var(--surface-alt)] focus:outline-none focus:border-[var(--accent)]">
+                    <option value="beauty_skincare" selected>Beauty & Skincare</option>
+                    <option value="body_care">Body Care & Fragrance</option>
+                    <option value="clothing_fashion">Clothing & Fashion (Try-On)</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-xs font-bold text-[var(--text-primary)] mb-1">Target Audience</label>
+                  <select id="in_gender" class="w-full p-2.5 rounded-xl border border-[var(--border)] text-xs text-[var(--text-primary)] bg-[var(--surface-alt)] focus:outline-none focus:border-[var(--accent)]">
+                    <option value="women" selected>Women</option>
+                    <option value="men">Men</option>
+                    <option value="unisex">Unisex</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Duration & Tone -->
+              <div class="grid grid-cols-2 gap-3">
+                <div>
+                  <label class="block text-xs font-bold text-[var(--text-primary)] mb-1">Video Duration</label>
+                  <select id="in_duration" class="w-full p-2.5 rounded-xl border border-[var(--border)] text-xs text-[var(--text-primary)] bg-[var(--surface-alt)] focus:outline-none focus:border-[var(--accent)]">
+                    <option value="30" selected>30-35 Seconds (Viral Standard)</option>
+                    <option value="40">40-45 Seconds (Deep Explainer)</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-xs font-bold text-[var(--text-primary)] mb-1">Narrative Tone</label>
+                  <select id="in_tone" class="w-full p-2.5 rounded-xl border border-[var(--border)] text-xs text-[var(--text-primary)] bg-[var(--surface-alt)] focus:outline-none focus:border-[var(--accent)]">
+                    <option value="emotional_hook" selected>Emotional Problem-Solver (Relatable Hook)</option>
+                    <option value="luxury_glamour">Luxury Glamour & High-End Aesthetic</option>
+                    <option value="clinical_authority">Clinical Dermatologist Authority</option>
+                    <option value="fast_ugc">Fast-Paced TikTok UGC Trend</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Hidden inputs for compatibility -->
+              <input type="hidden" id="in_lang" value="urdu">
+              <input type="hidden" id="in_action" value="face_application">
+              <input type="hidden" id="in_ai_model" value="auto_smart">
+              <input type="hidden" id="in_api_key" value="">
+              <input type="hidden" id="in_date_range" value="last_7_days">
+              <input type="hidden" id="in_start_date" value="">
+              <input type="hidden" id="in_end_date" value="">
+              <input type="hidden" id="in_avatar_character" value="ayesha_derm">
+              <input type="hidden" id="in_avatar_layout" value="multi_angle">
+              <input type="hidden" id="in_heygen_key" value="">
+
+              <!-- Voice & Background Music -->
+              <div class="grid grid-cols-2 gap-3">
+                <div>
+                  <label class="block text-xs font-bold text-[var(--text-primary)] mb-1">Spoken Voice Persona</label>
+                  <select id="in_voice" class="w-full p-2.5 rounded-xl border border-[var(--border)] text-xs text-[var(--text-primary)] bg-[var(--surface-alt)] focus:outline-none focus:border-[var(--accent)]">
+                    <option value="swara_influencer" selected>Swara — Conversational Roman Urdu Female</option>
+                    <option value="uzma_pk">Uzma — Pakistani Urdu Female</option>
+                    <option value="asad_pk">Asad — Crisp Pakistani Urdu Male</option>
+                    <option value="madhur_influencer">Madhur — Modern Lifestyle Male</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-xs font-bold text-[var(--text-primary)] mb-1">Background Music Track</label>
+                  <select id="in_bgm" class="w-full p-2.5 rounded-xl border border-[var(--border)] text-xs text-[var(--text-primary)] bg-[var(--surface-alt)] focus:outline-none focus:border-[var(--accent)]">
+                    <option value="lofi_chill" selected>Lo-Fi Skincare Routine (Calm Beat)</option>
+                    <option value="luxury_lounge">Luxury Boutique Ambient</option>
+                    <option value="acoustic_warm">Organic Warm Acoustic</option>
+                    <option value="none">None (Pure Voiceover Only)</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Primary Submit Button -->
+              <button type="button" id="btnStep1GenerateScript" onclick="submitStep1GenerateScript()" class="w-full py-3.5 btn-primary-accent rounded-xl text-sm font-bold transition flex items-center justify-center gap-2 cursor-pointer shadow-sm">
+                <span id="btnStep1Icon">⚡</span>
+                <span id="btnStep1Text">Step 1 Complete: Generate Roman Urdu Script ➜</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Right Column: Campaign Architecture Card -->
+          <div class="lg:col-span-5 space-y-5">
+            <div class="clean-card rounded-3xl p-6 md:p-7 space-y-4">
+              <h3 class="text-sm font-bold text-[var(--text-primary)] border-b border-[var(--border-subtle)] pb-2.5">
+                Campaign Architecture
+              </h3>
+              
+              <div class="p-4 rounded-2xl bg-[var(--surface-alt)] border border-[var(--border)] space-y-3">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 rounded-xl bg-[var(--surface)] border border-[var(--border)] flex items-center justify-center text-lg">
+                    🎯
+                  </div>
+                  <div>
+                    <h4 class="text-xs font-bold text-[var(--text-primary)]">Automated Roman Urdu Generation</h4>
+                    <p class="text-[11px] text-[var(--text-secondary)]">Script drafted specifically for your chosen product</p>
+                  </div>
+                </div>
+                <div class="text-[11px] text-[var(--text-secondary)] space-y-1.5 border-t border-[var(--border-subtle)] pt-2.5">
+                  <p class="flex items-center justify-between">
+                    <span>Language Format:</span>
+                    <strong class="text-[var(--text-primary)]">Roman Urdu (Desi Conversational)</strong>
+                  </p>
+                  <p class="flex items-center justify-between">
+                    <span>Hook Duration:</span>
+                    <strong class="text-[var(--text-primary)]">First 3-7 Seconds (High Retention)</strong>
+                  </p>
+                  <p class="flex items-center justify-between">
+                    <span>Visual Actor:</span>
+                    <strong class="text-[var(--accent)]">3D Human Supermodel Motion</strong>
+                  </p>
+                  <p class="flex items-center justify-between">
+                    <span>Aspect Ratio:</span>
+                    <strong class="text-[var(--text-primary)]">1080x1920 (9:16 Full Screen Reel)</strong>
+                  </p>
+                </div>
+              </div>
+
+              <!-- Live Tip Box -->
+              <div class="p-4 rounded-2xl bg-[var(--surface-alt)] border border-[var(--border)] text-xs text-[var(--text-secondary)] space-y-1.5">
+                <p class="font-bold text-[var(--text-primary)]">💡 4-Step Production Flow:</p>
+                <p><strong>1. Product Setup:</strong> Enter product and upload bottle or packaging photo.</p>
+                <p><strong>2. Script Review:</strong> Review Roman Urdu script and listen to neural voice preview.</p>
+                <p><strong>3. Supermodel Studio:</strong> Select 3D model, watch live rehearsal, adjust hair & wardrobe.</p>
+                <p><strong>4. Finalize & Vault:</strong> Render full 1080x1920 cinematic video reel.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- STEP 2: ROMAN URDU SCRIPT REVIEW & AUDIO   -->
+        <!-- ========================================== -->
+        <div id="wizard-step-2" class="hidden space-y-6">
+          <div class="clean-card rounded-3xl p-6 md:p-7 space-y-5">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[var(--border-subtle)] pb-4">
+              <div>
+                <div class="flex items-center gap-2">
+                  <h2 class="text-base font-bold text-[var(--text-primary)]">Step 2: Roman Urdu Script Review & Audio Preview</h2>
+                  <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-[var(--surface-alt)] text-[var(--accent)] border border-[var(--border)]">
+                    Roman Urdu Editable
+                  </span>
+                </div>
+                <p class="text-xs text-[var(--text-secondary)] mt-0.5">
+                  Review and customize dialogue for each scene. You can listen to the audio preview before video rendering.
+                </p>
+              </div>
+              
+              <!-- Audio Preview Controls -->
+              <div class="flex items-center gap-2">
+                <button type="button" id="btnPreviewScriptAudio" onclick="playScriptAudioPreview()" class="px-4 py-2 rounded-xl bg-[var(--surface-alt)] hover:border-[var(--text-primary)] text-[var(--text-primary)] border border-[var(--border)] text-xs font-bold transition flex items-center gap-2 shadow-xs cursor-pointer">
+                  <span id="btnAudioWaveIcon">🎧</span>
+                  <span id="btnAudioWaveText">Listen Voiceover Audio Preview</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Scene by Scene Editable Cards Grid (4 Scenes) -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              
+              <!-- Scene 1: Hook -->
+              <div class="p-4 rounded-2xl bg-[var(--surface-alt)] border border-[var(--border)] space-y-2">
+                <div class="flex items-center justify-between">
+                  <span class="text-xs font-bold text-[var(--accent)] flex items-center gap-1.5">
+                    <span class="w-2 h-2 rounded-full bg-[var(--accent)]"></span> Scene 01: Attention Hook (0s - 7s)
+                  </span>
+                  <span class="text-[10px] uppercase font-bold px-2 py-0.5 rounded bg-[var(--surface)] text-[var(--text-secondary)] border border-[var(--border)]">
+                    First 3 Seconds
+                  </span>
+                </div>
+                <textarea id="script_scene_1" rows="3" class="w-full p-3 rounded-xl border border-[var(--border)] text-xs text-[var(--text-primary)] bg-[var(--surface)] focus:outline-none focus:border-[var(--accent)] font-medium leading-relaxed" placeholder="Type Roman Urdu Hook..."></textarea>
+                <p class="text-[10px] text-[var(--text-secondary)] italic">
+                  Visual: 3D Model enters frame with expressive direct eye-contact, immediately hooking the viewer.
+                </p>
+              </div>
+
+              <!-- Scene 2: Problem -->
+              <div class="p-4 rounded-2xl bg-[var(--surface-alt)] border border-[var(--border)] space-y-2">
+                <div class="flex items-center justify-between">
+                  <span class="text-xs font-bold text-[var(--accent)] flex items-center gap-1.5">
+                    <span class="w-2 h-2 rounded-full bg-[var(--accent)]"></span> Scene 02: Daily Pain Point (7s - 15s)
+                  </span>
+                  <span class="text-[10px] uppercase font-bold px-2 py-0.5 rounded bg-[var(--surface)] text-[var(--text-secondary)] border border-[var(--border)]">
+                    Problem & Agitation
+                  </span>
+                </div>
+                <textarea id="script_scene_2" rows="3" class="w-full p-3 rounded-xl border border-[var(--border)] text-xs text-[var(--text-primary)] bg-[var(--surface)] focus:outline-none focus:border-[var(--accent)] font-medium leading-relaxed" placeholder="Type Roman Urdu Problem..."></textarea>
+                <p class="text-[10px] text-[var(--text-secondary)] italic">
+                  Visual: Relatable emotional struggle with dryness, dull skin, or harsh ordinary soaps.
+                </p>
+              </div>
+
+              <!-- Scene 3: Solution -->
+              <div class="p-4 rounded-2xl bg-[var(--surface-alt)] border border-[var(--border)] space-y-2">
+                <div class="flex items-center justify-between">
+                  <span class="text-xs font-bold text-[var(--accent)] flex items-center gap-1.5">
+                    <span class="w-2 h-2 rounded-full bg-[var(--accent)]"></span> Scene 03: Product Secret (15s - 25s)
+                  </span>
+                  <span class="text-[10px] uppercase font-bold px-2 py-0.5 rounded bg-[var(--surface)] text-[var(--text-secondary)] border border-[var(--border)]">
+                    Solution & Transformation
+                  </span>
+                </div>
+                <textarea id="script_scene_3" rows="3" class="w-full p-3 rounded-xl border border-[var(--border)] text-xs text-[var(--text-primary)] bg-[var(--surface)] focus:outline-none focus:border-[var(--accent)] font-medium leading-relaxed" placeholder="Type Roman Urdu Solution..."></textarea>
+                <p class="text-[10px] text-[var(--text-secondary)] italic">
+                  Visual: 3D Model demonstrates smooth application and glowing transformation.
+                </p>
+              </div>
+
+              <!-- Scene 4: CTA -->
+              <div class="p-4 rounded-2xl bg-[var(--surface-alt)] border border-[var(--border)] space-y-2">
+                <div class="flex items-center justify-between">
+                  <span class="text-xs font-bold text-[var(--accent)] flex items-center gap-1.5">
+                    <span class="w-2 h-2 rounded-full bg-[var(--accent)]"></span> Scene 04: Call to Action (25s - 32s)
+                  </span>
+                  <span class="text-[10px] uppercase font-bold px-2 py-0.5 rounded bg-[var(--surface)] text-[var(--text-secondary)] border border-[var(--border)]">
+                    Urgency & Bio Link
+                  </span>
+                </div>
+                <textarea id="script_scene_4" rows="3" class="w-full p-3 rounded-xl border border-[var(--border)] text-xs text-[var(--text-primary)] bg-[var(--surface)] focus:outline-none focus:border-[var(--accent)] font-medium leading-relaxed" placeholder="Type Roman Urdu Call to Action..."></textarea>
+                <p class="text-[10px] text-[var(--text-secondary)] italic">
+                  Visual: Verified badge, product floating card, and clear call-to-action to buy.
+                </p>
+              </div>
+
+            </div>
+
+            <!-- Navigation Buttons -->
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-3 pt-3 border-t border-[var(--border-subtle)]">
+              <div class="flex items-center gap-2 w-full sm:w-auto">
+                <button type="button" onclick="goToWizardStep(1)" class="px-4 py-2.5 rounded-xl bg-[var(--surface)] hover:bg-[var(--surface-alt)] text-[var(--text-secondary)] border border-[var(--border)] text-xs font-semibold transition cursor-pointer">
+                  ← Back to Product Setup
+                </button>
+                <button type="button" onclick="submitStep1GenerateScript()" class="px-4 py-2.5 rounded-xl bg-[var(--surface)] hover:bg-[var(--surface-alt)] text-[var(--text-secondary)] border border-[var(--border)] text-xs font-semibold transition cursor-pointer">
+                  ↺ Regenerate Script
+                </button>
+              </div>
+
+              <button type="button" onclick="goToWizardStep(3)" class="w-full sm:w-auto px-6 py-3 btn-primary-accent rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 shadow-sm cursor-pointer">
+                <span>Step 2 Complete: Approve Script & Choose Supermodel ➜</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- STEP 3: 3D SUPERMODEL STUDIO & REHEARSAL   -->
+        <!-- ========================================== -->
+        <div id="wizard-step-3" class="hidden space-y-6">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            
+            <!-- Left Column: Supermodel Cards Catalog (6 Models) -->
+            <div class="lg:col-span-7 clean-card rounded-3xl p-6 md:p-7 space-y-5">
+              <div class="flex items-center justify-between border-b border-[var(--border-subtle)] pb-3">
+                <div>
+                  <h2 class="text-base font-bold text-[var(--text-primary)]">Step 3: Select 3D Human Supermodel</h2>
+                  <p class="text-xs text-[var(--text-secondary)]">Click any model to see their live video rehearsal on the right</p>
+                </div>
+                <span class="text-xs font-semibold text-[var(--accent)] bg-[var(--surface-alt)] px-2.5 py-1 rounded-lg border border-[var(--border)]">
+                  6 Models Available
+                </span>
+              </div>
+
+              <!-- Model Cards Grid -->
+              <div id="supermodelCardsContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                <!-- Dynamically populated via JS -->
+              </div>
+            </div>
+
+            <!-- Right Column: Live Rehearsal Video Screen & Customization -->
+            <div class="lg:col-span-5 space-y-5">
+              <div class="clean-card rounded-3xl p-6 md:p-7 space-y-5">
+                <div class="flex items-center justify-between border-b border-[var(--border-subtle)] pb-3">
+                  <div>
+                    <h3 class="text-sm font-bold text-[var(--text-primary)]">Live Video Rehearsal</h3>
+                    <p class="text-[11px] text-[var(--text-secondary)]">3D Human Motion Preview</p>
+                  </div>
+                  <span class="flex items-center gap-1.5 text-[10px] font-bold text-[var(--accent)] bg-[var(--surface-alt)] px-2.5 py-1 rounded-full border border-[var(--border)]">
+                    <span class="w-2 h-2 rounded-full bg-[var(--accent)] animate-pulse"></span>
+                    LIVE REHEARSAL
+                  </span>
+                </div>
+
+                <!-- 9:16 Rehearsal Video Player -->
+                <div class="w-full max-w-[240px] mx-auto bg-black rounded-2xl overflow-hidden aspect-[9/16] relative shadow-lg border border-[var(--border)]">
+                  <video id="rehearsalPlayer" autoplay loop muted playsinline class="w-full h-full object-cover">
+                    <source id="rehearsalPlayerSrc" src="/api/stream/rehearsal/ayesha_derm.mp4" type="video/mp4">
+                  </video>
+                  <!-- Overlay Card -->
+                  <div class="absolute bottom-3 left-3 right-3 p-2.5 rounded-xl bg-black/60 backdrop-blur-xs text-white text-xs border border-white/10">
+                    <p id="rehearsalOverlayName" class="font-bold text-xs truncate">Dr. Ayesha Khan</p>
+                    <p id="rehearsalOverlayRole" class="text-[10px] text-white/80 truncate">Senior Consultant Dermatologist</p>
+                  </div>
+                </div>
+
+                <!-- Model Customization Options (Hair & Wardrobe) -->
+                <div class="space-y-3 pt-2 border-t border-[var(--border-subtle)]">
+                  <div>
+                    <label class="block text-xs font-bold text-[var(--text-primary)] mb-1">Hairstyle Style / Cut</label>
+                    <select id="in_supermodel_hair" class="w-full p-2.5 rounded-xl border border-[var(--border)] text-xs text-[var(--text-primary)] bg-[var(--surface-alt)] focus:outline-none focus:border-[var(--accent)]">
+                      <option value="Professional Low Bun">Professional Low Bun</option>
+                      <option value="Elegant Blowdry Waves">Elegant Blowdry Waves</option>
+                      <option value="Clinical Headscarf">Clinical Headscarf</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label class="block text-xs font-bold text-[var(--text-primary)] mb-1">Wardrobe / Outfit</label>
+                    <select id="in_supermodel_wardrobe" class="w-full p-2.5 rounded-xl border border-[var(--border)] text-xs text-[var(--text-primary)] bg-[var(--surface-alt)] focus:outline-none focus:border-[var(--accent)]">
+                      <option value="White Clinical Lab Coat">White Clinical Lab Coat</option>
+                      <option value="Formal Silk Scrubs">Formal Silk Scrubs</option>
+                      <option value="Hospital Blazer">Hospital Blazer</option>
+                    </select>
+                  </div>
+                </div>
+
+                <!-- AI Video Diffusion Engine (Kling AI / Minimax / Wan 2.1) -->
+                <div class="p-3.5 rounded-2xl bg-[var(--surface-alt)] border border-[var(--border)] space-y-2.5">
+                  <div class="flex items-center justify-between">
+                    <span class="text-xs font-bold text-[var(--text-primary)] flex items-center gap-1.5">
+                      <span>⚡ AI Motion Diffusion Engine</span>
+                      <span class="px-1.5 py-0.5 rounded text-[10px] bg-emerald-500/10 text-emerald-600 font-semibold border border-emerald-500/20">Active</span>
+                    </span>
+                    <span class="text-[10px] text-[var(--text-secondary)]">Kling 1.6 / Minimax / Wan</span>
+                  </div>
+
+                  <div class="grid grid-cols-2 gap-2">
+                    <div>
+                      <label class="block text-[10px] font-bold text-[var(--text-secondary)] mb-1">Engine Mode</label>
+                      <select id="in_video_provider" onchange="toggleVideoKeyInput()" class="w-full p-2 rounded-lg border border-[var(--border)] text-xs text-[var(--text-primary)] bg-[var(--surface)] focus:outline-none focus:border-[var(--accent)]">
+                        <option value="local">Studio Presets (Instant & Free)</option>
+                        <option value="replicate">Replicate Cloud (Kling 1.6 / Minimax)</option>
+                        <option value="fal">Fal.ai Cloud (Wan 2.1 / Kling)</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label class="block text-[10px] font-bold text-[var(--text-secondary)] mb-1">AI Video Model</label>
+                      <select id="in_video_model" class="w-full p-2 rounded-lg border border-[var(--border)] text-xs text-[var(--text-primary)] bg-[var(--surface)] focus:outline-none focus:border-[var(--accent)]">
+                        <option value="kling">Kling AI v1.6 (High-Res Realistic)</option>
+                        <option value="minimax">Minimax Video-01 (Natural Motion)</option>
+                        <option value="wan">Wan 2.1 720p (Deep Photorealism)</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div id="video_key_container" class="hidden">
+                    <label class="block text-[10px] font-bold text-[var(--text-secondary)] mb-1">Cloud API Key (Replicate r8_... or Fal Key)</label>
+                    <input type="password" id="in_video_key" placeholder="Enter API Key (e.g. r8_...)" class="w-full p-2 rounded-lg border border-[var(--border)] text-xs text-[var(--text-primary)] bg-[var(--surface)] focus:outline-none focus:border-[var(--accent)]">
+                    <p class="text-[9px] text-[var(--text-secondary)] mt-1">Leave empty to use authentic pre-rendered 3D studio clips.</p>
+                  </div>
+                </div>
+
+                <!-- Render Reel Button -->
+                <div class="pt-2 flex flex-col gap-2">
+                  <button type="button" id="btnSubmitRenderReel" onclick="submitStep3RenderReel()" class="w-full py-3.5 btn-primary-accent rounded-xl text-xs font-bold shadow-sm transition flex items-center justify-center gap-2 cursor-pointer">
+                    <span>🚀 Finalize & Render 1080x1920 Cinematic Reel ➜</span>
+                  </button>
+                  <button type="button" onclick="goToWizardStep(2)" class="w-full py-2 rounded-xl bg-[var(--surface)] hover:bg-[var(--surface-alt)] text-[var(--text-secondary)] border border-[var(--border)] text-xs font-semibold transition text-center cursor-pointer">
+                    ← Back to Script Review
+                  </button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- STEP 4: CINEMA REEL & CONTENT VAULT        -->
+        <!-- ========================================== -->
+        <div id="wizard-step-4" class="hidden space-y-6">
+          <div class="clean-card rounded-3xl p-6 md:p-7 space-y-6">
+            <div class="flex items-center justify-between border-b border-[var(--border-subtle)] pb-4">
+              <div>
+                <div class="flex items-center gap-2">
+                  <h2 class="text-base font-bold text-[var(--text-primary)]">Step 4: Final 1080x1920 Cinematic Reel</h2>
+                  <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-[var(--surface-alt)] text-[var(--success)] border border-[var(--border)]">
+                    Rendered HD
+                  </span>
+                </div>
+                <p id="pvDuration" class="text-xs text-[var(--text-secondary)] mt-0.5">Duration: ~30s (Full Vertical Reel)</p>
+              </div>
+              <span id="statusPill" class="text-xs px-3 py-1 rounded-full font-bold bg-[var(--surface-alt)] text-[var(--text-secondary)] border border-[var(--border)]">
+                In Review
+              </span>
+            </div>
+
+            <div class="flex flex-col sm:flex-row gap-6 items-center">
+              <!-- 9:16 Video Player -->
+              <div class="w-60 flex-shrink-0 bg-black rounded-2xl overflow-hidden aspect-[9/16] relative shadow-xl border border-[var(--border)]">
+                <video id="player" controls class="w-full h-full object-cover">
+                  <source id="playerSrc" src="" type="video/mp4">
+                </video>
+              </div>
+
+              <!-- Metadata Summary -->
+              <div class="flex-1 space-y-3.5 w-full">
+                <div class="flex items-center gap-3">
+                  <div id="pvProductThumbWrapper" class="hidden w-14 h-14 rounded-xl overflow-hidden border border-[var(--border)] bg-[var(--surface)] shadow-xs flex-shrink-0">
+                    <img id="pvProductThumb" src="" class="w-full h-full object-cover">
+                  </div>
+                  <div>
+                    <span id="pvCat" class="text-[10px] uppercase font-bold text-[var(--text-secondary)] bg-[var(--surface-alt)] px-2 py-0.5 rounded border border-[var(--border)]">
+                      Beauty & Skincare
+                    </span>
+                    <h4 id="pvTitle" class="text-base font-bold text-[var(--text-primary)] mt-0.5">Garnier Vitamin C Serum</h4>
+                  </div>
+                </div>
+
+                <!-- Details Badges -->
+                <div class="p-3.5 rounded-xl bg-[var(--surface-alt)] border border-[var(--border)] text-xs space-y-2">
+                  <div class="flex flex-wrap items-center gap-2 text-[11px] text-[var(--text-secondary)]">
+                    <span class="font-semibold text-[var(--text-primary)]">3D Supermodel:</span>
+                    <span id="pvAvatarBadge" class="px-2 py-0.5 bg-[var(--surface)] rounded border border-[var(--border)] font-bold text-[var(--accent)]">Dr. Ayesha Khan</span>
+                    <span class="font-semibold text-[var(--text-primary)]">Style:</span>
+                    <span id="pvStyleBadge" class="px-2 py-0.5 bg-[var(--surface)] rounded border border-[var(--border)] font-bold text-[var(--text-primary)]">Clinical Bun • White Coat</span>
+                  </div>
+                </div>
+
+                <div class="p-3 rounded-xl bg-[var(--surface-alt)] border border-[var(--border)] text-xs">
+                  <span class="font-bold text-[var(--text-primary)] block mb-0.5">Spoken Roman Urdu Hook:</span>
+                  <p id="pvHook" class="text-[var(--text-secondary)] italic">"Agar aapke chehre par bhi stubborn spots hain..."</p>
+                </div>
+
+                <div class="p-3 rounded-xl bg-[var(--surface-alt)] border border-[var(--border)] text-xs">
+                  <span class="font-bold text-[var(--text-primary)] block mb-0.5">Model Demonstration:</span>
+                  <p id="pvAction" class="text-[var(--text-secondary)]">3D Supermodel application demonstration with synchronized Urdu audio.</p>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="pt-2 flex flex-wrap gap-2">
+                  <button id="btnApprove" onclick="approveCurrent()" class="px-4 py-2.5 bg-[var(--surface)] hover:bg-[var(--surface-alt)] text-[var(--text-primary)] border border-[var(--border)] text-xs font-semibold rounded-xl shadow-xs transition flex items-center gap-1.5 cursor-pointer">
+                    Approve Reel
+                  </button>
+                  <a id="btnZip" href="#" download class="px-3 py-2.5 bg-[var(--surface)] hover:bg-[var(--surface-alt)] text-[var(--text-primary)] border border-[var(--border)] text-xs font-semibold rounded-xl transition flex items-center gap-1.5">
+                    Download ZIP Package
+                  </a>
+                  <button id="btnScheduleCurrent" onclick="openScheduleModal()" class="px-3 py-2.5 bg-[var(--surface)] hover:bg-[var(--surface-alt)] text-[var(--text-primary)] border border-[var(--border)] text-xs font-semibold rounded-xl shadow-xs transition flex items-center gap-1.5 cursor-pointer" title="Schedule automated post">
+                    Schedule Post
+                  </button>
+                  <button id="btnDeleteCurrent" onclick="deleteCurrentVideo()" class="px-3 py-2.5 bg-[var(--surface)] hover:bg-[var(--surface-alt)] text-[var(--error)] border border-[var(--border)] hover:border-[var(--error)] text-xs font-semibold rounded-xl transition flex items-center gap-1.5 cursor-pointer" title="Permanently delete this video">
+                    Delete Reel
+                  </button>
+                  <button type="button" onclick="goToWizardStep(1)" class="px-4 py-2.5 btn-primary-accent text-xs font-bold rounded-xl shadow-xs transition flex items-center gap-1.5 cursor-pointer">
+                    ✨ Create Another Reel
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Storyboard Breakdown -->
+            <div class="pt-4 border-t border-[var(--border-subtle)]">
+              <h4 class="text-xs font-bold text-[var(--text-primary)] mb-2 uppercase tracking-wide">4-Scene Storyboard:</h4>
+              <div id="scenesContainer" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2 text-xs">
+                <!-- Scenes inserted dynamically -->
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- SHARED DYNAMIC PROGRESS BAR -->
+        <div id="progBar" class="hidden p-5 rounded-3xl clean-card space-y-3 bg-[var(--surface)] border border-[var(--border)] shadow-lg">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2.5">
+              <span id="progPulseDot" class="w-3 h-3 rounded-full bg-[var(--accent)] animate-pulse"></span>
+              <span id="progStepTitle" class="font-bold text-[var(--text-primary)] text-sm">Stage: Initializing Pipeline</span>
+            </div>
+            <span id="progPercent" class="font-mono text-xs font-bold text-[var(--accent)] bg-[var(--surface-alt)] px-3 py-1 rounded-lg border border-[var(--border)]">0%</span>
+          </div>
+          <p id="progText" class="text-xs text-[var(--text-secondary)] font-medium leading-tight">Rendering 1080x1920 3D Supermodel reel...</p>
+          <div class="w-full bg-[var(--surface-alt)] rounded-full h-2.5 overflow-hidden border border-[var(--border)]">
+            <div id="progFill" class="bg-[var(--accent)] h-full rounded-full transition-all duration-300" style="width: 0%"></div>
+          </div>
+          <div class="flex items-center justify-between text-[11px] text-[var(--text-secondary)] font-medium pt-1">
+            <span>Script Synthesis</span>
+            <span>Neural Urdu Audio</span>
+            <span>3D Supermodel Motion</span>
+            <span>1080x1920 Canvas</span>
+            <span>Vault Staging</span>
+          </div>
+        </div>
+
+      </div>
+
+
+      <!-- VIEW 2: CONTENT VAULT -->
+      <div id="view-vault" class="hidden clean-card rounded-3xl p-7 space-y-6">
+        <div class="flex items-center justify-between border-b border-slate-100 pb-4">
+          <div>
+            <h2 class="text-lg font-bold text-slate-800">Content Vault & Video Library</h2>
+            <p class="text-xs text-slate-500">Every rendered 1080x1920 MP4 video ready to publish</p>
+          </div>
+          <button onclick="loadVaultData()" class="text-xs text-rose-600 font-bold hover:underline">Refresh</button>
+        </div>
+        <div id="vaultList" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          <!-- Video Cards -->
+        </div>
+      </div>
+
+      <!-- VIEW 3: VOICE ACCENT LAB -->
+      <div id="view-voices" class="hidden clean-card rounded-3xl p-7 space-y-6">
+        <div class="border-b border-slate-100 pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div>
+            <h2 class="text-lg font-bold text-slate-800">Neural Voice Persona Studio</h2>
+            <p class="text-xs text-slate-500">Audition all free neural voices for pure Urdu, Desi accents, and English</p>
+          </div>
+          <div class="flex flex-wrap gap-2 text-xs">
+            <button onclick="filterVoices('all')" class="px-3 py-1.5 rounded-lg bg-rose-50 text-rose-700 font-bold border border-rose-200">All Voices</button>
+            <button onclick="filterVoices('urdu')" class="px-3 py-1.5 rounded-lg bg-slate-100 text-slate-700 font-bold hover:bg-slate-200">Pure Urdu</button>
+            <button onclick="filterVoices('female')" class="px-3 py-1.5 rounded-lg bg-slate-100 text-slate-700 font-bold hover:bg-slate-200">Female</button>
+            <button onclick="filterVoices('male')" class="px-3 py-1.5 rounded-lg bg-slate-100 text-slate-700 font-bold hover:bg-slate-200">Male</button>
+            <button onclick="filterVoices('english')" class="px-3 py-1.5 rounded-lg bg-slate-100 text-slate-700 font-bold hover:bg-slate-200">English</button>
+          </div>
+        </div>
+        <div id="voicesList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <!-- Voice cards -->
+        </div>
+      </div>
+
+      <!-- VIEW 4: CHANNELS & DISTRIBUTION -->
+      <div id="view-distribution" class="hidden clean-card rounded-3xl p-7 space-y-6">
+        <div class="border-b border-slate-100 pb-4">
+          <h2 class="text-lg font-bold text-slate-800">Multi-Channel Social Staging</h2>
+          <p class="text-xs text-slate-500">Official API connections & direct publishing staging</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div class="p-5 rounded-2xl border border-slate-200 bg-white shadow-sm">
+            <h4 class="font-bold text-slate-800 text-sm">Instagram Reels</h4>
+            <p class="text-xs text-slate-500 mt-1">1080x1920 H.264 • Meta Graph API</p>
+            <span class="inline-block mt-3 px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">Ready</span>
+          </div>
+          <div class="p-5 rounded-2xl border border-slate-200 bg-white shadow-sm">
+            <h4 class="font-bold text-slate-800 text-sm">TikTok</h4>
+            <p class="text-xs text-slate-500 mt-1">Direct Post & Export Mode</p>
+            <span class="inline-block mt-3 px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">Ready</span>
+          </div>
+          <div class="p-5 rounded-2xl border border-slate-200 bg-white shadow-sm">
+            <h4 class="font-bold text-slate-800 text-sm">YouTube Shorts</h4>
+            <p class="text-xs text-slate-500 mt-1">Vertical Short Upload API</p>
+            <span class="inline-block mt-3 px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">Ready</span>
+          </div>
+          <div class="p-5 rounded-2xl border border-slate-200 bg-white shadow-sm">
+            <h4 class="font-bold text-slate-800 text-sm">Facebook Reels</h4>
+            <p class="text-xs text-slate-500 mt-1">Meta Pages Publishing</p>
+            <span class="inline-block mt-3 px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">Ready</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- VIEW 5: COMPLIANCE & RULES -->
+      <div id="view-settings" class="hidden clean-card rounded-3xl p-7 space-y-6">
+        <div class="border-b border-slate-100 pb-4">
+          <h2 class="text-lg font-bold text-slate-800">Automated Safety & Compliance Engine</h2>
+          <p class="text-xs text-slate-500">Every script passes through automated blocking filters before publishing</p>
+        </div>
+        <div class="p-4 rounded-2xl bg-amber-50 border border-amber-200 text-xs text-amber-800 space-y-1">
+          <p class="font-bold">Active Prohibited Claims Rule:</p>
+          <p>Any marketing script mentioning "cure", "100%", "miracle", "permanent result", or "instant gora" is blocked by the QC engine to protect social accounts from policy strikes and bans.</p>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <audio id="audioTester" class="hidden"></audio>
+
+  <!-- Floating Toast Notifications -->
+  <div id="toastContainer" class="fixed bottom-6 right-6 z-50 flex flex-col gap-2.5 pointer-events-none"></div>
+
+  <script>
+    
+    // ============================================================
+    // 4-STEP WIZARD ENGINE & 3D SUPERMODEL LOGIC
+    // ============================================================
+    let currentWizardStep = 1;
+    let currentScriptData = null;
+    let supermodelsCatalog = [];
+    let selectedSupermodelId = 'ayesha_derm';
+    let isPreviewAudioPlaying = false;
+
+    function goToWizardStep(step) {
+      currentWizardStep = step;
+      [1, 2, 3, 4].forEach(s => {
+        const stepEl = document.getElementById(`wizard-step-${s}`);
+        const navEl = document.getElementById(`step-nav-${s}`);
+        const bubbleEl = document.getElementById(`step-bubble-${s}`);
+        
+        if (stepEl) {
+          if (s === step) {
+            stepEl.classList.remove('hidden');
+          } else {
+            stepEl.classList.add('hidden');
+          }
+        }
+        
+        if (navEl && bubbleEl) {
+          if (s === step) {
+            navEl.className = 'flex items-center gap-3 p-2.5 rounded-xl text-left transition bg-[var(--surface-alt)] border border-[var(--text-primary)] shadow-xs opacity-100';
+            bubbleEl.className = 'w-8 h-8 rounded-lg flex items-center justify-center font-bold text-xs bg-[var(--accent)] text-[var(--accent-contrast)] shadow-xs';
+          } else if (s < step) {
+            navEl.className = 'flex items-center gap-3 p-2.5 rounded-xl text-left transition bg-[var(--surface)] border border-[var(--border)] opacity-90 hover:opacity-100 cursor-pointer';
+            bubbleEl.className = 'w-8 h-8 rounded-lg flex items-center justify-center font-bold text-xs bg-[var(--surface-alt)] text-[var(--success)] border border-[var(--border)]';
+            bubbleEl.innerHTML = '✓';
+          } else {
+            navEl.className = 'flex items-center gap-3 p-2.5 rounded-xl text-left transition bg-[var(--surface)] border border-[var(--border)] opacity-60 hover:opacity-100 cursor-pointer';
+            bubbleEl.className = 'w-8 h-8 rounded-lg flex items-center justify-center font-bold text-xs bg-[var(--surface-alt)] text-[var(--text-secondary)]';
+            bubbleEl.innerText = `${s}`;
+          }
+        }
+      });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    async function submitStep1GenerateScript() {
+      const prompt = document.getElementById('in_prompt').value.trim();
+      if (!prompt) {
+        showToast('Please enter a product prompt or topic!', 'error');
+        return;
+      }
+      
+      const btn = document.getElementById('btnStep1GenerateScript');
+      const btnIcon = document.getElementById('btnStep1Icon');
+      const btnText = document.getElementById('btnStep1Text');
+      
+      btn.disabled = true;
+      btn.classList.add('opacity-70');
+      btnIcon.innerHTML = `<span class="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>`;
+      btnText.innerText = "Generating Roman Urdu Script...";
+
+      try {
+        const res = await fetch('/api/generate-script', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            product_prompt: prompt,
+            category: document.getElementById('in_category').value,
+            target_gender: document.getElementById('in_gender').value,
+            target_duration: parseInt(document.getElementById('in_duration').value),
+            tone: document.getElementById('in_tone').value
+          })
+        });
+
+        const data = await res.json();
+        if (res.ok && data.script) {
+          currentScriptData = data.script;
+          document.getElementById('script_scene_1').value = data.script.hook || '';
+          document.getElementById('script_scene_2').value = data.script.problem || '';
+          document.getElementById('script_scene_3').value = data.script.solution || data.script.action || '';
+          document.getElementById('script_scene_4').value = data.script.cta || '';
+          
+          showToast('Roman Urdu script generated! Review & preview voiceover.', 'success');
+          goToWizardStep(2);
+        } else {
+          showToast('Script generation failed: ' + (data.detail || 'Error'), 'error');
+        }
+      } catch (err) {
+        showToast('Error generating script: ' + err, 'error');
+      } finally {
+        btn.disabled = false;
+        btn.classList.remove('opacity-70');
+        btnIcon.innerText = "⚡";
+        btnText.innerText = "Step 1 Complete: Generate Roman Urdu Script ➜";
+      }
+    }
+
+    async function playScriptAudioPreview() {
+      const s1 = document.getElementById('script_scene_1').value.trim();
+      const s2 = document.getElementById('script_scene_2').value.trim();
+      const s3 = document.getElementById('script_scene_3').value.trim();
+      const s4 = document.getElementById('script_scene_4').value.trim();
+      
+      const fullText = `${s1} ${s2} ${s3} ${s4}`.trim() || s1;
+      if (!fullText) {
+        showToast('Please enter script dialogue first!', 'error');
+        return;
+      }
+
+      if (isPreviewAudioPlaying && !audioTester.paused) {
+        audioTester.pause();
+        audioTester.currentTime = 0;
+        isPreviewAudioPlaying = false;
+        updatePreviewAudioButton(false);
+        return;
+      }
+
+      const btnWaveText = document.getElementById('btnAudioWaveText');
+      if (btnWaveText) btnWaveText.innerText = "Synthesizing Audio...";
+
+      try {
+        const res = await fetch('/api/preview-script-audio', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            text: fullText,
+            voice_key: document.getElementById('in_voice').value
+          })
+        });
+        const data = await res.json();
+        if (res.ok && data.audio_url) {
+          audioTester.src = data.audio_url + '?t=' + Date.now();
+          audioTester.play();
+          isPreviewAudioPlaying = true;
+          updatePreviewAudioButton(true);
+        } else {
+          showToast('Voice preview failed: ' + (data.detail || 'Error'), 'error');
+          updatePreviewAudioButton(false);
+        }
+      } catch (err) {
+        showToast('Audio preview error: ' + err, 'error');
+        updatePreviewAudioButton(false);
+      }
+    }
+
+    function updatePreviewAudioButton(isPlaying) {
+      const btn = document.getElementById('btnPreviewScriptAudio');
+      const icon = document.getElementById('btnAudioWaveIcon');
+      const text = document.getElementById('btnAudioWaveText');
+      if (!btn || !icon || !text) return;
+
+      if (isPlaying) {
+        icon.innerHTML = `
+          <span class="flex items-center gap-0.5 h-3">
+            <span class="w-1 bg-[var(--accent)] rounded-full wave-bar-1"></span>
+            <span class="w-1 bg-[var(--accent)] rounded-full wave-bar-2"></span>
+            <span class="w-1 bg-[var(--accent)] rounded-full wave-bar-3"></span>
+            <span class="w-1 bg-[var(--accent)] rounded-full wave-bar-4"></span>
+          </span>
+        `;
+        text.innerText = "Playing Audio Preview... (Stop)";
+        btn.className = "px-4 py-2 rounded-xl bg-[var(--surface-alt)] border border-[var(--accent)] text-[var(--accent)] text-xs font-bold transition flex items-center gap-2 shadow-xs cursor-pointer";
+      } else {
+        icon.innerText = "🎧";
+        text.innerText = "Listen Voiceover Audio Preview";
+        btn.className = "px-4 py-2 rounded-xl bg-[var(--surface-alt)] hover:border-[var(--text-primary)] text-[var(--text-primary)] border border-[var(--border)] text-xs font-bold transition flex items-center gap-2 shadow-xs cursor-pointer";
+      }
+    }
+
+    async function loadSupermodelsCatalog() {
+      try {
+        const res = await fetch('/api/supermodels');
+        const models = await res.json();
+        if (models && models.length > 0) {
+          supermodelsCatalog = models;
+          renderSupermodelCards(models);
+          selectSupermodel(models[0].id);
+        }
+      } catch (err) {
+        console.error('Failed to load supermodels catalog', err);
+      }
+    }
+
+    function renderSupermodelCards(models) {
+      const container = document.getElementById('supermodelCardsContainer');
+      if (!container) return;
+      container.innerHTML = '';
+
+      models.forEach(m => {
+        const isSel = m.id === selectedSupermodelId;
+        const card = document.createElement('div');
+        card.id = `card_model_${m.id}`;
+        card.className = `p-3.5 rounded-2xl border transition cursor-pointer flex flex-col justify-between space-y-3 ${isSel ? 'border-[var(--accent)] bg-[var(--surface-alt)] shadow-sm' : 'border-[var(--border)] bg-[var(--surface)] hover:border-[var(--text-primary)]'}`;
+        card.onclick = () => selectSupermodel(m.id);
+
+        card.innerHTML = `
+          <div class="flex items-start gap-3">
+            <div class="w-14 h-14 rounded-xl overflow-hidden bg-black flex-shrink-0 border border-[var(--border)]">
+              <img src="${m.rehearsal_image}" class="w-full h-full object-cover" onerror="this.src='/api/stream/image/test_rose_card.jpg'">
+            </div>
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center justify-between gap-1">
+                <h4 class="font-bold text-xs text-[var(--text-primary)] truncate">${m.name}</h4>
+                <span id="badge_sel_${m.id}" class="text-[9px] font-bold px-1.5 py-0.5 rounded ${isSel ? 'bg-[var(--accent)] text-[var(--accent-contrast)]' : 'hidden'}">Selected</span>
+              </div>
+              <p class="text-[10px] text-[var(--accent)] font-semibold mt-0.5">${m.badge}</p>
+              <p class="text-[10px] text-[var(--text-secondary)] line-clamp-2 mt-0.5 leading-snug">${m.desc}</p>
+            </div>
+          </div>
+          <div class="flex items-center justify-between text-[10px] pt-2 border-t border-[var(--border-subtle)] text-[var(--text-secondary)] font-medium">
+            <span>${m.category}</span>
+            <span class="text-[var(--accent)] font-semibold">Live 3D Motion ↗</span>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function selectSupermodel(modelId) {
+      selectedSupermodelId = modelId;
+      const model = supermodelsCatalog.find(m => m.id === modelId);
+      if (!model) return;
+
+      // Update card styling
+      supermodelsCatalog.forEach(m => {
+        const c = document.getElementById(`card_model_${m.id}`);
+        const b = document.getElementById(`badge_sel_${m.id}`);
+        if (c) {
+          if (m.id === modelId) {
+            c.className = 'p-3.5 rounded-2xl border border-[var(--accent)] bg-[var(--surface-alt)] shadow-sm transition cursor-pointer flex flex-col justify-between space-y-3';
+            if (b) b.classList.remove('hidden');
+          } else {
+            c.className = 'p-3.5 rounded-2xl border border-[var(--border)] bg-[var(--surface)] hover:border-[var(--text-primary)] transition cursor-pointer flex flex-col justify-between space-y-3';
+            if (b) b.classList.add('hidden');
+          }
+        }
+      });
+
+      // Update Live Video Rehearsal Player
+      const player = document.getElementById('rehearsalPlayer');
+      if (player) {
+        player.src = model.rehearsal_video;
+        player.play().catch(e => console.log('Autoplay handled:', e));
+      }
+      document.getElementById('rehearsalOverlayName').innerText = model.name;
+      document.getElementById('rehearsalOverlayRole').innerText = model.role;
+
+      // Update Hair dropdown
+      const hairSel = document.getElementById('in_supermodel_hair');
+      if (hairSel) {
+        hairSel.innerHTML = '';
+        (model.hair_presets || ["Natural Waves", "Sleek Side Part"]).forEach(h => {
+          const opt = document.createElement('option');
+          opt.value = h;
+          opt.innerText = h;
+          hairSel.appendChild(opt);
+        });
+      }
+
+      // Update Wardrobe dropdown
+      const wardSel = document.getElementById('in_supermodel_wardrobe');
+      if (wardSel) {
+        wardSel.innerHTML = '';
+        (model.wardrobe_presets || ["Standard"]).forEach(w => {
+          const opt = document.createElement('option');
+          opt.value = w;
+          opt.innerText = w;
+          wardSel.appendChild(opt);
+        });
+      }
+
+      // Auto-sync voice for gender
+      const voiceEl = document.getElementById('in_voice');
+      if (model.id === 'hamza_grooming') {
+        if (voiceEl && (voiceEl.value.includes('swara') || voiceEl.value.includes('uzma'))) {
+          voiceEl.value = 'asad_pk';
+        }
+      } else {
+        if (voiceEl && (voiceEl.value.includes('asad') || voiceEl.value.includes('madhur'))) {
+          voiceEl.value = 'swara_influencer';
+        }
+      }
+    }
+
+    function toggleVideoKeyInput() {
+      const provEl = document.getElementById('in_video_provider');
+      const box = document.getElementById('video_key_container');
+      if (!provEl || !box) return;
+      if (provEl.value === 'replicate' || provEl.value === 'fal') {
+        box.classList.remove('hidden');
+      } else {
+        box.classList.add('hidden');
+      }
+    }
+
+    function initVideoEngineConfig() {
+      const savedKey = localStorage.getItem('stored_video_engine_key');
+      const keyInput = document.getElementById('in_video_key');
+      if (savedKey && keyInput) {
+        keyInput.value = savedKey;
+      }
+      toggleVideoKeyInput();
+    }
+
+    async function submitStep3RenderReel() {
+      const prompt = document.getElementById('in_prompt').value.trim();
+      const s1 = document.getElementById('script_scene_1').value.trim();
+      const s2 = document.getElementById('script_scene_2').value.trim();
+      const s3 = document.getElementById('script_scene_3').value.trim();
+      const s4 = document.getElementById('script_scene_4').value.trim();
+
+      const customScript = {
+        hook: s1,
+        problem: s2,
+        solution: s3,
+        cta: s4,
+        scenes: [
+          { scene_number: 1, title: "Hook", subtitle: s1 },
+          { scene_number: 2, title: "Problem", subtitle: s2 },
+          { scene_number: 3, title: "Solution", subtitle: s3 },
+          { scene_number: 4, title: "CTA", subtitle: s4 }
+        ]
+      };
+
+      const btn = document.getElementById('btnSubmitRenderReel');
+      btn.disabled = true;
+      btn.classList.add('opacity-50');
+
+      startDynamicProgress();
+
+      try {
+        const res = await fetch('/api/generate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            product_prompt: prompt,
+            category: document.getElementById('in_category').value,
+            target_gender: document.getElementById('in_gender').value,
+            language: 'roman_urdu',
+            action_type: 'face_application',
+            voice_key: document.getElementById('in_voice').value,
+            bgm_track: document.getElementById('in_bgm').value,
+            target_duration: parseInt(document.getElementById('in_duration').value),
+            product_image_data: currentProductImageData,
+            custom_script: customScript,
+            supermodel_id: selectedSupermodelId,
+            hairstyle: document.getElementById('in_supermodel_hair').value,
+            wardrobe: document.getElementById('in_supermodel_wardrobe').value,
+            video_engine_provider: document.getElementById('in_video_provider') ? document.getElementById('in_video_provider').value : 'local',
+            video_engine_model: document.getElementById('in_video_model') ? document.getElementById('in_video_model').value : 'kling',
+            video_engine_key: (document.getElementById('in_video_key') && document.getElementById('in_video_key').value.trim()) ? document.getElementById('in_video_key').value.trim() : null
+          })
+        });
+
+        const data = await res.json();
+        if (res.ok && data.data) {
+          finishDynamicProgress();
+          showToast('1080x1920 3D Supermodel Reel rendered successfully!', 'success');
+          showVideo(data.data);
+          goToWizardStep(4);
+        } else {
+          stopDynamicProgress();
+          showToast('Generation error: ' + (data.detail || 'Could not produce video'), 'error');
+        }
+      } catch (err) {
+        stopDynamicProgress();
+        showToast('Render failed: ' + err, 'error');
+      } finally {
+        btn.disabled = false;
+        btn.classList.remove('opacity-50');
+        setTimeout(() => {
+          const prog = document.getElementById('progBar');
+          if (prog) prog.classList.add('hidden');
+        }, 3000);
+      }
+    }
+
+    let activeItem = null;
+
+    // Toast Notification System
+    function showToast(message, type = 'success') {
+      const container = document.getElementById('toastContainer');
+      if (!container) return;
+      const toast = document.createElement('div');
+      const isErr = type === 'error';
+      toast.className = `toast-anim pointer-events-auto px-4 py-3 rounded-2xl shadow-xl border text-xs font-semibold flex items-center gap-2.5 transition-all bg-white ${isErr ? 'border-red-200 text-red-700' : 'border-slate-200 text-slate-800'}`;
+      
+      const icon = isErr
+        ? `<svg class="w-4 h-4 text-red-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>`
+        : `<svg class="w-4 h-4 text-emerald-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>`;
+        
+      toast.innerHTML = `${icon}<span>${message}</span>`;
+      container.appendChild(toast);
+      
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateY(12px)';
+        setTimeout(() => toast.remove(), 300);
+      }, 3500);
+    }
+
+    // Product Photo Handling (Option 1)
+    let currentProductImageData = null;
+
+    function handleProductFileSelect(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      if (!file.type.startsWith('image/')) {
+        showToast('Please select a valid image file (PNG, JPG, WebP)', 'error');
+        return;
+      }
+      
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        currentProductImageData = e.target.result;
+        document.getElementById('imgThumbnailPreview').src = currentProductImageData;
+        document.getElementById('imgFileName').innerText = file.name;
+        document.getElementById('dropzoneEmpty').classList.add('hidden');
+        document.getElementById('dropzonePreview').classList.remove('hidden');
+        document.getElementById('in_product_url').value = '';
+        showToast('Product photo attached! Will be rendered in reel.', 'success');
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function handleProductUrlInput(val) {
+      val = val.trim();
+      if (val.startsWith('http://') || val.startsWith('https://')) {
+        currentProductImageData = val;
+        document.getElementById('imgThumbnailPreview').src = val;
+        document.getElementById('imgFileName').innerText = 'Online Product URL';
+        document.getElementById('dropzoneEmpty').classList.add('hidden');
+        document.getElementById('dropzonePreview').classList.remove('hidden');
+        showToast('Product image URL attached!', 'success');
+      } else if (!val && !document.getElementById('in_product_file').files.length) {
+        removeProductImage();
+      }
+    }
+
+    function removeProductImage(event) {
+      if (event) event.stopPropagation();
+      currentProductImageData = null;
+      document.getElementById('in_product_file').value = '';
+      document.getElementById('in_product_url').value = '';
+      document.getElementById('imgThumbnailPreview').src = '';
+      document.getElementById('dropzoneEmpty').classList.remove('hidden');
+      document.getElementById('dropzonePreview').classList.add('hidden');
+      showToast('Product photo removed', 'info');
+    }
+
+    function switchTab(t) {
+      ['create', 'vault', 'voices', 'distribution', 'settings'].forEach(id => {
+        const btn = document.getElementById(`nav-${id}`);
+        const view = document.getElementById(`view-${id}`);
+        if (btn) btn.className = 'sidebar-link w-full flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-medium text-white/95 transition text-left';
+        if (view) view.classList.add('hidden');
+      });
+
+      const activeBtn = document.getElementById(`nav-${t}`);
+      const activeView = document.getElementById(`view-${t}`);
+      if (activeBtn) activeBtn.className = 'sidebar-link sidebar-active w-full flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-semibold transition text-left';
+      if (activeView) activeView.classList.remove('hidden');
+
+      if (t === 'vault') loadVaultData();
+      if (t === 'voices') loadVoicesData();
+    }
+
+    function setPreset(p, c, g, l, a, v) {
+      document.getElementById('in_prompt').value = p;
+      document.getElementById('in_category').value = c;
+      document.getElementById('in_gender').value = g;
+      document.getElementById('in_lang').value = l;
+      document.getElementById('in_action').value = a;
+      document.getElementById('in_voice').value = v;
+    }
+
+    let currentPlayingVoice = null;
+    const audioTester = document.getElementById('audioTester');
+
+    // Attach listeners to sync playing state across UI
+    audioTester.addEventListener('play', () => {
+      syncAudioPlayingState(true, currentPlayingVoice);
+    });
+    audioTester.addEventListener('pause', () => {
+      syncAudioPlayingState(false, null);
+    });
+    audioTester.addEventListener('ended', () => {
+      syncAudioPlayingState(false, null);
+    });
+    audioTester.addEventListener('error', () => {
+      syncAudioPlayingState(false, null);
+    });
+
+    function syncAudioPlayingState(isPlaying, voiceKey) {
+      // 1. Update Studio Form voice test button
+      const studioBtn = document.getElementById('btnTestVoice');
+      const studioIcon = document.getElementById('btnTestVoiceIcon');
+      const studioText = document.getElementById('btnTestVoiceText');
+      
+      if (studioBtn && studioIcon && studioText) {
+        if (isPlaying) {
+          studioIcon.innerHTML = `
+            <span class="flex items-center gap-0.5 h-3">
+              <span class="w-1 bg-rose-600 rounded-full wave-bar-1"></span>
+              <span class="w-1 bg-rose-600 rounded-full wave-bar-2"></span>
+              <span class="w-1 bg-rose-600 rounded-full wave-bar-3"></span>
+              <span class="w-1 bg-rose-600 rounded-full wave-bar-4"></span>
+            </span>
+          `;
+          studioText.innerText = "Playing Sample... (Stop)";
+          studioBtn.className = "text-xs text-rose-700 bg-rose-50 border border-rose-200 px-2.5 py-1 rounded-xl font-bold flex items-center gap-1.5 transition";
+        } else {
+          studioIcon.innerHTML = `
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          `;
+          studioText.innerText = "Listen Voice Sample";
+          studioBtn.className = "text-xs text-rose-600 hover:text-rose-700 font-semibold flex items-center gap-1.5 transition";
+        }
+      }
+
+      // 2. Update Voice Lab buttons
+      if (window.allVoicesCache) {
+        window.allVoicesCache.forEach(v => {
+          const btn = document.getElementById(`vbtn_${v.key}`);
+          if (btn) {
+            if (isPlaying && voiceKey === v.key) {
+              btn.innerHTML = `
+                <span class="flex items-center gap-0.5 h-3 mr-1">
+                  <span class="w-1 bg-white rounded-full wave-bar-1"></span>
+                  <span class="w-1 bg-white rounded-full wave-bar-2"></span>
+                  <span class="w-1 bg-white rounded-full wave-bar-3"></span>
+                </span>
+                <span>Playing... Stop</span>
+              `;
+              btn.className = "flex-1 px-3 py-2 rounded-xl bg-rose-500 hover:bg-rose-600 text-white font-bold text-xs flex items-center justify-center gap-1 shadow-sm transition";
+            } else {
+              btn.innerHTML = `
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/></svg>
+                <span>Play Sample</span>
+              `;
+              btn.className = "flex-1 px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs flex items-center justify-center gap-1 transition";
+            }
+          }
+        });
+      }
+
+      if (!isPlaying) {
+        currentPlayingVoice = null;
+      }
+    }
+
+    async function toggleTestCurrentVoice() {
+      const vKey = document.getElementById('in_voice').value;
+      if (currentPlayingVoice === vKey && !audioTester.paused) {
+        audioTester.pause();
+        audioTester.currentTime = 0;
+        return;
+      }
+      
+      const studioText = document.getElementById('btnTestVoiceText');
+      if (studioText) studioText.innerText = "Loading Audio...";
+
+      try {
+        const res = await fetch('/api/test-voice', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ voice_key: vKey })
+        });
+        const data = await res.json();
+        if (data.audio_url) {
+          currentPlayingVoice = vKey;
+          audioTester.src = data.audio_url + '?t=' + Date.now();
+          audioTester.play();
+        } else {
+          syncAudioPlayingState(false, null);
+        }
+      } catch (err) {
+        console.error(err);
+        syncAudioPlayingState(false, null);
+      }
+    }
+
+    async function toggleVoiceSample(vKey) {
+      if (currentPlayingVoice === vKey && !audioTester.paused) {
+        audioTester.pause();
+        audioTester.currentTime = 0;
+        return;
+      }
+
+      const btn = document.getElementById(`vbtn_${vKey}`);
+      if (btn) btn.innerText = "Loading...";
+
+      try {
+        const res = await fetch('/api/test-voice', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ voice_key: vKey })
+        });
+        const data = await res.json();
+        if (data.audio_url) {
+          currentPlayingVoice = vKey;
+          audioTester.src = data.audio_url + '?t=' + Date.now();
+          audioTester.play();
+        } else {
+          syncAudioPlayingState(false, null);
+        }
+      } catch (err) {
+        console.error(err);
+        syncAudioPlayingState(false, null);
+      }
+    }
+
+    window.allVoicesCache = [];
+
+    async function loadVoicesData() {
+      const list = document.getElementById('voicesList');
+      if (!window.allVoicesCache || window.allVoicesCache.length === 0) {
+        if (list) {
+          list.innerHTML = `
+            <div class="skeleton-box h-32 rounded-2xl"></div>
+            <div class="skeleton-box h-32 rounded-2xl"></div>
+            <div class="skeleton-box h-32 rounded-2xl"></div>
+            <div class="skeleton-box h-32 rounded-2xl"></div>
+          `;
+        }
+        const res = await fetch('/api/voices');
+        window.allVoicesCache = await res.json();
+        populateStudioVoiceDropdown(window.allVoicesCache);
+      }
+      renderVoices(window.allVoicesCache);
+    }
+
+    function populateStudioVoiceDropdown(voices) {
+      const select = document.getElementById('in_voice');
+      if (!select) return;
+      select.innerHTML = '';
+
+      const urduGroup = document.createElement('optgroup');
+      urduGroup.label = 'Pakistani Urdu Voices';
+      
+      const engGroup = document.createElement('optgroup');
+      engGroup.label = 'English Voices';
+
+      voices.forEach(v => {
+        const opt = document.createElement('option');
+        opt.value = v.key;
+        opt.innerText = `${v.name} (${v.gender.toUpperCase()})`;
+        if (v.key === 'uzma_pk') opt.selected = true;
+        
+        if (v.lang === 'urdu') {
+          urduGroup.appendChild(opt);
+        } else {
+          engGroup.appendChild(opt);
+        }
+      });
+
+      select.appendChild(urduGroup);
+      select.appendChild(engGroup);
+    }
+
+    function filterVoices(type) {
+      if (!window.allVoicesCache) return;
+      let filtered = window.allVoicesCache;
+      if (type === 'urdu') filtered = window.allVoicesCache.filter(v => v.lang === 'urdu');
+      else if (type === 'female') filtered = window.allVoicesCache.filter(v => v.gender === 'female');
+      else if (type === 'male') filtered = window.allVoicesCache.filter(v => v.gender === 'male');
+      else if (type === 'english') filtered = window.allVoicesCache.filter(v => v.lang === 'english');
+      renderVoices(filtered);
+    }
+
+    function selectVoiceForStudio(key) {
+      const sel = document.getElementById('in_voice');
+      if (sel) sel.value = key;
+      switchTab('create');
+    }
+
+    function renderVoices(voices) {
+      const list = document.getElementById('voicesList');
+      if (!list) return;
+      list.innerHTML = '';
+      voices.forEach(v => {
+        const card = document.createElement('div');
+        card.className = 'p-5 rounded-2xl border border-slate-200 bg-white shadow-sm flex flex-col justify-between hover:shadow-md transition';
+        card.innerHTML = `
+          <div>
+            <div class="flex items-center justify-between">
+              <h4 class="font-bold text-slate-800 text-sm">${v.name}</h4>
+              <span class="text-[10px] px-2 py-0.5 rounded font-bold ${v.gender === 'female' ? 'bg-rose-50 text-rose-600' : 'bg-slate-100 text-slate-700'}">
+                ${v.gender.toUpperCase()}
+              </span>
+            </div>
+            <p class="text-xs text-slate-500 mt-2">${v.desc}</p>
+            <span class="inline-block mt-2 text-[10px] text-slate-400 font-semibold uppercase tracking-wider">${v.region || ''} • ${v.lang.toUpperCase()}</span>
+          </div>
+          <div class="mt-4 flex items-center gap-2">
+            <button id="vbtn_${v.key}" onclick="toggleVoiceSample('${v.key}')" class="flex-1 px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs flex items-center justify-center gap-1 transition">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/></svg>
+              <span>Play Sample</span>
+            </button>
+            <button onclick="selectVoiceForStudio('${v.key}')" class="px-3 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs transition">
+              Select
+            </button>
+          </div>
+        `;
+        list.appendChild(card);
+      });
+    }
+
+    async function deleteVideo(itemId) {
+      if (!confirm("Are you sure you want to permanently delete this video reel and its assets?")) {
+        return;
+      }
+      try {
+        const res = await fetch(`/api/videos/${itemId}`, { method: 'DELETE' });
+        const data = await res.json();
+        if (res.ok) {
+          showToast('Video reel and associated assets deleted!', 'success');
+          loadVaultData();
+          if (activeItem && activeItem.id === itemId) {
+            await loadLatestVideo();
+          }
+        } else {
+          showToast('Delete failed: ' + (data.detail || 'Unknown error'), 'error');
+        }
+      } catch (err) {
+        showToast('Error deleting video: ' + err, 'error');
+      }
+    }
+
+    async function deleteCurrentVideo() {
+      if (!activeItem || !activeItem.id) {
+        showToast('No video currently loaded to delete.', 'error');
+        return;
+      }
+      await deleteVideo(activeItem.id);
+    }
+
+    async function loadLatestVideo() {
+      try {
+        const res = await fetch('/api/videos');
+        const videos = await res.json();
+        if (videos && videos.length > 0) {
+          showVideo(videos[0]);
+        } else {
+          resetPlayerToEmpty();
+        }
+      } catch (err) {
+        console.error('Failed to load latest video', err);
+      }
+    }
+
+    function resetPlayerToEmpty() {
+      activeItem = null;
+      const player = document.getElementById('player');
+      player.pause();
+      player.src = '';
+      document.getElementById('pvTitle').innerText = 'No Videos in Vault';
+      document.getElementById('pvCat').innerText = 'STUDIO READY';
+      document.getElementById('pvHook').innerText = "Click 'Generate Vertical Reel' to produce your first reel!";
+      document.getElementById('pvAction').innerText = 'Awaiting generation.';
+      if (document.getElementById('pvResearchSource')) document.getElementById('pvResearchSource').innerText = 'Idle';
+      if (document.getElementById('pvProductForm')) document.getElementById('pvProductForm').innerText = 'None';
+      if (document.getElementById('pvAngleBadge')) document.getElementById('pvAngleBadge').innerText = 'None';
+      if (document.getElementById('pvAvatarBadge')) document.getElementById('pvAvatarBadge').innerText = 'None';
+      if (document.getElementById('pvStyleBadge')) document.getElementById('pvStyleBadge').innerText = 'None';
+
+      document.getElementById('scenesContainer').innerHTML = '<div class="col-span-2 text-center text-slate-400 py-6 text-xs font-medium">No scenes generated yet.</div>';
+      document.getElementById('statusPill').innerText = 'Ready';
+      document.getElementById('statusPill').className = 'text-xs px-3 py-1 rounded-full font-semibold bg-slate-100 text-slate-600';
+      document.getElementById('btnApprove').className = 'px-4 py-2.5 bg-slate-100 text-slate-400 text-xs font-semibold rounded-xl cursor-not-allowed';
+      document.getElementById('btnZip').classList.add('pointer-events-none', 'opacity-40');
+      document.getElementById('btnDeleteCurrent').classList.add('pointer-events-none', 'opacity-40');
+      if (document.getElementById('btnScheduleCurrent')) document.getElementById('btnScheduleCurrent').classList.add('pointer-events-none', 'opacity-40');
+    }
+
+    function showVideo(item) {
+      activeItem = item;
+      const vidName = item.video_path.split('\\').pop().split('/').pop();
+      const packName = item.pack_path.split('\\').pop().split('/').pop();
+
+      document.getElementById('player').src = `/api/stream/video/${vidName}`;
+      document.getElementById('pvTitle').innerText = item.product_name;
+      document.getElementById('pvCat').innerText = item.category.replace('_', ' ').toUpperCase();
+      document.getElementById('pvHook').innerText = `"${item.script.hook}"`;
+      document.getElementById('pvAction').innerText = item.script.action_description;
+      document.getElementById('btnZip').href = `/api/download/pack/${packName}`;
+      document.getElementById('btnZip').classList.remove('pointer-events-none', 'opacity-40');
+      document.getElementById('btnDeleteCurrent').classList.remove('pointer-events-none', 'opacity-40');
+      if (document.getElementById('btnScheduleCurrent')) document.getElementById('btnScheduleCurrent').classList.remove('pointer-events-none', 'opacity-40');
+
+      // Display Product Thumbnail if image was uploaded
+      const thumbWrapper = document.getElementById('pvProductThumbWrapper');
+      const thumbImg = document.getElementById('pvProductThumb');
+      if (item.product_image_path) {
+        const fname = item.product_image_path.split('\\').pop().split('/').pop();
+        if (thumbImg) thumbImg.src = `/api/stream/image/${fname}`;
+        if (thumbWrapper) thumbWrapper.classList.remove('hidden');
+      } else {
+        if (thumbWrapper) thumbWrapper.classList.add('hidden');
+      }
+
+      // Update Live Research & Form badges
+      const rSource = (item.script && item.script.research_source) ? item.script.research_source : 'Live Market Intelligence';
+      const rForm = (item.script && item.script.detected_form) ? item.script.detected_form.replace('_', ' ').toUpperCase() : 'PRODUCT ACTIVE';
+      const aiUsed = (item.script && item.script.ai_model_used) ? item.script.ai_model_used : 'Auto-Smart Neural Engine';
+      const angleName = (item.script && item.script.narrative_angle) ? item.script.narrative_angle : ((item.script && item.script.presentation_angle_badge) ? item.script.presentation_angle_badge : 'Autonomous AI Flow');
+
+      if (document.getElementById('pvResearchSource')) document.getElementById('pvResearchSource').innerText = `${rSource} (${aiUsed})`;
+      if (document.getElementById('pvProductForm')) document.getElementById('pvProductForm').innerText = rForm;
+      if (document.getElementById('pvAngleBadge')) document.getElementById('pvAngleBadge').innerText = angleName;
+      if (document.getElementById('pvAvatarBadge')) {
+        const smId = item.supermodel_id || item.avatar_character;
+        const smObj = (supermodelsCatalog || []).find(m => m.id === smId);
+        document.getElementById('pvAvatarBadge').innerText = smObj ? smObj.name : (item.avatar_character || 'Dr. Ayesha Khan');
+      }
+      if (document.getElementById('pvStyleBadge')) {
+        const h = item.hairstyle || 'Natural Waves';
+        const w = item.wardrobe || 'Standard';
+        document.getElementById('pvStyleBadge').innerText = `${h} • ${w}`;
+      }
+
+      const pill = document.getElementById('statusPill');
+      const btn = document.getElementById('btnApprove');
+      if (item.status === 'Approved') {
+        pill.innerText = 'Approved';
+        pill.className = 'text-xs px-3 py-1 rounded-full font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200';
+        btn.className = 'px-4 py-2.5 bg-slate-100 text-slate-400 text-xs font-semibold rounded-xl cursor-default';
+        btn.innerText = 'Staged for Socials';
+      } else if (item.status === 'Scheduled') {
+        pill.innerText = `Scheduled (${item.scheduled_platform || 'Socials'})`;
+        pill.className = 'text-xs px-3 py-1 rounded-full font-semibold bg-blue-50 text-blue-700 border border-blue-200';
+        btn.className = 'px-4 py-2.5 bg-slate-100 text-slate-400 text-xs font-semibold rounded-xl cursor-default';
+        btn.innerText = 'Scheduled';
+      } else {
+        pill.innerText = 'In Review';
+        pill.className = 'text-xs px-3 py-1 rounded-full font-semibold bg-amber-50 text-amber-700 border border-amber-200';
+        btn.className = 'px-4 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold rounded-xl shadow transition flex items-center gap-1.5';
+        btn.innerText = 'Approve Reel';
+      }
+
+      // Populate Storyboard Scenes with Interactive Multi-Scene Card Previews
+      const sc = document.getElementById('scenesContainer');
+      sc.innerHTML = '';
+      const totalDur = item.target_duration || 35;
+      const perSceneDur = (totalDur / 4).toFixed(1);
+      
+      (item.script.scenes || []).forEach((s, idx) => {
+        const sceneNum = idx + 1;
+        const cardImgName = `${item.id}_scene_${sceneNum}.jpg`;
+        const d = document.createElement('div');
+        d.className = 'p-3 rounded-xl clean-card bg-[var(--surface-alt)] border border-[var(--border)] text-[var(--text-primary)] flex flex-col justify-between space-y-2';
+        d.innerHTML = `
+          <div>
+            <div class="flex items-center justify-between">
+              <span class="font-bold text-[var(--accent)] text-xs">Scene 0${sceneNum}: ${s.title || ''}</span>
+              <span class="text-[9px] uppercase font-bold px-1.5 py-0.5 rounded bg-[var(--surface)] border border-[var(--border)] text-[var(--text-secondary)]">Animated</span>
+            </div>
+            <p class="text-[11px] text-[var(--text-secondary)] mt-1 italic leading-snug">"${s.subtitle || s.on_screen_text}"</p>
+          </div>
+          <div class="pt-1.5 border-t border-[var(--border-subtle)] flex items-center justify-between text-[10px]">
+            <span class="text-[var(--text-secondary)] font-medium">Timing: ~${perSceneDur}s</span>
+            <a href="/api/stream/image/${cardImgName}" target="_blank" class="font-semibold text-[var(--accent)] hover:underline flex items-center gap-1">
+              View Card ↗
+            </a>
+          </div>
+        `;
+        sc.appendChild(d);
+      });
+    }
+
+    async function approveCurrent() {
+      if (!activeItem) return;
+      const btn = document.getElementById('btnApprove');
+      const oldHtml = btn.innerHTML;
+      btn.innerHTML = `<span class="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin"></span> Approving...`;
+      try {
+        await fetch(`/api/approve/${activeItem.id}`, { method: 'POST' });
+        activeItem.status = 'Approved';
+        showToast('Reel approved and staged for multi-platform distribution!', 'success');
+        showVideo(activeItem);
+      } catch (err) {
+        showToast('Failed to approve: ' + err, 'error');
+        btn.innerHTML = oldHtml;
+      }
+    }
+
+    async function loadVaultData() {
+      const list = document.getElementById('vaultList');
+      if (list) {
+        list.innerHTML = `
+          <div class="skeleton-box aspect-[9/16] rounded-2xl"></div>
+          <div class="skeleton-box aspect-[9/16] rounded-2xl"></div>
+          <div class="skeleton-box aspect-[9/16] rounded-2xl"></div>
+          <div class="skeleton-box aspect-[9/16] rounded-2xl"></div>
+        `;
+      }
+      try {
+        const res = await fetch('/api/videos');
+        const videos = await res.json();
+        list.innerHTML = '';
+        if (!videos || videos.length === 0) {
+          list.innerHTML = `
+            <div class="col-span-full py-16 text-center text-slate-400 text-xs font-semibold">
+              No videos in your library yet. Generate your first video in the Studio!
+            </div>
+          `;
+          return;
+        }
+        videos.forEach(v => {
+          const vidName = v.video_path.split('\\').pop().split('/').pop();
+          const packName = v.pack_path.split('\\').pop().split('/').pop();
+          const card = document.createElement('div');
+          card.className = 'clean-card p-3 rounded-2xl space-y-2';
+          card.innerHTML = `
+            <div class="aspect-[9/16] bg-black rounded-xl overflow-hidden relative shadow">
+              <video controls class="w-full h-full object-cover">
+                <source src="/api/stream/video/${vidName}" type="video/mp4">
+              </video>
+            </div>
+            <h4 class="font-bold text-slate-800 text-xs truncate">${v.product_name}</h4>
+            <div class="flex items-center justify-between text-[11px] pt-1 border-t border-slate-100">
+              <span class="font-semibold ${v.status === 'Approved' ? 'text-emerald-600' : 'text-amber-600'}">${v.status}</span>
+              <div class="flex items-center gap-2.5">
+                <button type="button" onclick="openScheduleModal('${v.id}')" class="text-blue-600 hover:text-blue-800 font-semibold transition text-[11px]" title="Schedule automated post">Schedule</button>
+                <a href="/api/download/pack/${packName}" download class="text-slate-600 hover:text-slate-900 font-semibold transition">ZIP</a>
+                <button type="button" onclick="deleteVideo('${v.id}')" class="text-red-500 hover:text-red-700 font-semibold flex items-center gap-1 transition" title="Delete video">
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                  Delete
+                </button>
+              </div>
+            </div>
+          `;
+          list.appendChild(card);
+        });
+      } catch (err) {
+        if (list) list.innerHTML = `<div class="col-span-full py-8 text-center text-red-500 text-xs font-semibold">Error loading library: ${err}</div>`;
+      }
+    }
+
+    // Dynamic 0% to 100% Progress Engine
+    let progressInterval = null;
+    let currentProgress = 0;
+
+    const STAGES = [
+      { at: 0, title: "Market Intelligence Radar", text: "Scanning live viral hashtags & product angles on TikTok & Reels in Pakistan..." },
+      { at: 15, title: "AI Narrative Synthesis", text: "Generating high-converting Urdu psychological hook and scene storyboard..." },
+      { at: 32, title: "Urdu Vocal Scripting", text: "Verifying authentic Urdu script formatting and natural conversational cadence..." },
+      { at: 48, title: "Neural Voice Synthesis", text: "Rendering crystal-clear studio voiceover with native Pakistani inflection..." },
+      { at: 65, title: "D-ID Neural Talking Presenter", text: "Connecting to D-ID AI Cloud: Uploading presenter model and submitting lip-sync pipeline..." },
+      { at: 78, title: "D-ID Neural AI Cloud Lip-Sync", text: "Cloud neural network animating mouth movements, expressions, and blinking (~20-30s)..." },
+      { at: 92, title: "1080x1920 Commercial Formatting", text: "Compositing presenter on vertical canvas, styling subtitles, and verified badges..." },
+      { at: 97, title: "QC Compliance & Vault Staging", text: "Finalizing export pack and saving to Content Vault..." }
+    ];
+
+    function startDynamicProgress() {
+      currentProgress = 0;
+      const prog = document.getElementById('progBar');
+      prog.classList.remove('hidden');
+      updateProgressUI(0, STAGES[0].title, STAGES[0].text);
+
+      clearInterval(progressInterval);
+      progressInterval = setInterval(() => {
+        if (currentProgress < 99) {
+          let inc = 1.8;
+          if (currentProgress < 30) inc = 2.0;
+          else if (currentProgress < 65) inc = 1.2;
+          else if (currentProgress < 85) inc = 0.5;
+          else if (currentProgress < 94) inc = 0.2;
+          else inc = 0.05; // Gentle crawl during D-ID cloud finish, never freezes!
+          
+          currentProgress = Math.min(99, +(currentProgress + inc).toFixed(2));
+
+          let activeStage = STAGES[0];
+          for (const s of STAGES) {
+            if (currentProgress >= s.at) activeStage = s;
+          }
+          updateProgressUI(Math.floor(currentProgress), activeStage.title, activeStage.text);
+        }
+      }, 400);
+    }
+
+    function updateProgressUI(pct, title, text) {
+      const pFill = document.getElementById('progFill');
+      const pPct = document.getElementById('progPercent');
+      const pTitle = document.getElementById('progStepTitle');
+      const pText = document.getElementById('progText');
+      const pDot = document.getElementById('progPulseDot');
+
+      if (pFill) pFill.style.width = `${pct}%`;
+      if (pPct) pPct.innerText = `${pct}%`;
+      if (pTitle) pTitle.innerText = `Stage: ${title}`;
+      if (pText) pText.innerText = text;
+
+      if (pct >= 100) {
+        if (pFill) pFill.style.width = `100%`;
+        if (pPct) {
+          pPct.innerText = `100%`;
+          pPct.className = "font-mono text-xs font-bold text-emerald-600 bg-emerald-50 px-2.5 py-0.5 rounded-md border border-emerald-200";
+        }
+        if (pDot) {
+          pDot.className = "w-2.5 h-2.5 rounded-full bg-emerald-500";
+        }
+      } else {
+        if (pPct) pPct.className = "font-mono text-xs font-bold text-rose-600 bg-rose-50 px-2.5 py-0.5 rounded-md border border-rose-100";
+        if (pDot) pDot.className = "w-2.5 h-2.5 rounded-full bg-rose-500 animate-pulse";
+      }
+    }
+
+    function finishDynamicProgress() {
+      clearInterval(progressInterval);
+      updateProgressUI(100, "Render Complete", "1080x1920 MP4 vertical reel generated with product visual!");
+    }
+
+    function stopDynamicProgress() {
+      clearInterval(progressInterval);
+      const prog = document.getElementById('progBar');
+      if (prog) prog.classList.add('hidden');
+      updateProgressUI(0, "Idle", "");
+    }
+
+    document.getElementById('studioForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const prompt = document.getElementById('in_prompt').value;
+      const category = document.getElementById('in_category').value;
+      const gender = document.getElementById('in_gender').value;
+      const lang = document.getElementById('in_lang').value;
+      const dur = parseInt(document.getElementById('in_duration').value);
+      const voice = document.getElementById('in_voice').value;
+      const act = document.getElementById('in_action').value;
+
+      const btn = document.getElementById('btnSubmit');
+
+      btn.disabled = true;
+      btn.classList.add('opacity-50');
+      startDynamicProgress();
+
+      try {
+        const res = await fetch('/api/generate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            product_prompt: prompt,
+            category: category,
+            target_gender: gender,
+            language: lang,
+            action_type: act,
+            voice_key: voice,
+            target_duration: dur,
+            ai_model: document.getElementById('in_ai_model').value,
+            api_key: document.getElementById('in_api_key').value.trim() || null,
+            date_range_type: document.getElementById('in_date_range').value,
+            start_date: document.getElementById('in_start_date').value || null,
+            end_date: document.getElementById('in_end_date').value || null,
+            product_image_data: currentProductImageData,
+            bgm_track: document.getElementById('in_bgm') ? document.getElementById('in_bgm').value : 'lofi_chill',
+            avatar_character: document.getElementById('in_avatar_character') ? document.getElementById('in_avatar_character').value : 'none',
+            avatar_layout: document.getElementById('in_avatar_layout') ? document.getElementById('in_avatar_layout').value : 'multi_angle',
+            heygen_api_key: document.getElementById('in_heygen_key') ? document.getElementById('in_heygen_key').value.trim() : null
+          })
+        });
+        const data = await res.json();
+        if (data.data) {
+          finishDynamicProgress();
+          showToast('1080x1920 Reel with product visual generated successfully!', 'success');
+          showVideo(data.data);
+        } else {
+          stopDynamicProgress();
+          showToast('Generation error: ' + (data.detail || 'Could not produce video'), 'error');
+        }
+      } catch (err) {
+        stopDynamicProgress();
+        showToast('Render failed: ' + err, 'error');
+      } finally {
+        btn.disabled = false;
+        btn.classList.remove('opacity-50');
+        setTimeout(() => {
+          const prog = document.getElementById('progBar');
+          if (prog) prog.classList.add('hidden');
+        }, 3000);
+      }
+    });
+
+    // Date Window & Live Viral Radar Logic
+    window.radarData = null;
+    window.currentRadarTab = 'women_skincare';
+    window.currentRadarDateRange = 'last_7_days';
+
+    function initDateInputs() {
+      const today = new Date().toISOString().split('T')[0];
+      const d = new Date();
+      d.setDate(d.getDate() - 7);
+      const weekAgo = d.toISOString().split('T')[0];
+      
+      const rStart = document.getElementById('rdr_start_date');
+      const rEnd = document.getElementById('rdr_end_date');
+      if (rStart) rStart.value = weekAgo;
+      if (rEnd) rEnd.value = today;
+
+      const inStart = document.getElementById('in_start_date');
+      const inEnd = document.getElementById('in_end_date');
+      if (inStart) inStart.value = weekAgo;
+      if (inEnd) inEnd.value = today;
+    }
+
+    async function loadRadarTrends(rangeType = 'last_7_days', sDate = null, eDate = null) {
+      const grid = document.getElementById('radarCardsGrid');
+      if (grid) {
+        grid.innerHTML = `
+          <div class="skeleton-box h-40 rounded-2xl"></div>
+          <div class="skeleton-box h-40 rounded-2xl"></div>
+          <div class="skeleton-box h-40 rounded-2xl"></div>
+          <div class="skeleton-box h-40 rounded-2xl"></div>
+        `;
+      }
+      try {
+        let url = `/api/trends/radar?date_range_type=${rangeType}`;
+        if (sDate && eDate) {
+          url += `&start_date=${sDate}&end_date=${eDate}`;
+        }
+        const res = await fetch(url);
+        window.radarData = await res.json();
+        if (window.radarData) {
+          if (window.radarData.season) {
+            document.getElementById('radarSeason').innerText = `${window.radarData.season} ${window.radarData.year}`;
+          }
+          if (window.radarData.date_window) {
+            document.getElementById('radarDateBadge').innerText = `${window.radarData.date_window}`;
+          }
+        }
+        renderRadarCards();
+      } catch (err) {
+        console.error('Failed to load radar trends', err);
+        if (grid) grid.innerHTML = `<div class="col-span-full py-8 text-center text-red-500 text-xs font-semibold">Failed to load radar trends: ${err}</div>`;
+      }
+    }
+
+    function setRadarDateRange(rangeType) {
+      window.currentRadarDateRange = rangeType;
+      const btns = {
+        'last_24_hours': 'rdr_btn_24h',
+        'last_7_days': 'rdr_btn_7d',
+        'last_30_days': 'rdr_btn_30d',
+        'custom': 'rdr_btn_custom'
+      };
+      Object.keys(btns).forEach(k => {
+        const el = document.getElementById(btns[k]);
+        if (el) {
+          if (k === rangeType) {
+            el.className = 'px-3 py-1 rounded-lg text-xs font-semibold bg-rose-500 text-white shadow-xs transition';
+          } else {
+            el.className = 'px-3 py-1 rounded-lg text-xs font-semibold bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 transition';
+          }
+        }
+      });
+      document.getElementById('radarCustomDateBox').classList.add('hidden');
+      loadRadarTrends(rangeType);
+    }
+
+    function toggleRadarCustomDate() {
+      const box = document.getElementById('radarCustomDateBox');
+      box.classList.toggle('hidden');
+      setRadarDateRange('custom');
+    }
+
+    function applyCustomRadarDate() {
+      const s = document.getElementById('rdr_start_date').value;
+      const e = document.getElementById('rdr_end_date').value;
+      if (!s || !e) {
+        alert('Please pick both Start Date and End Date!');
+        return;
+      }
+      loadRadarTrends('custom', s, e);
+    }
+
+    function onDateRangeChange() {
+      const val = document.getElementById('in_date_range').value;
+      const row = document.getElementById('formCustomDateRow');
+      const lbl = document.getElementById('formDateLabel');
+      if (val === 'custom') {
+        row.classList.remove('hidden');
+        lbl.innerText = 'Custom Dates';
+      } else {
+        row.classList.add('hidden');
+        if (val === 'last_24_hours') lbl.innerText = 'Past 24 Hours';
+        else if (val === 'last_30_days') lbl.innerText = 'Past 30 Days';
+        else lbl.innerText = 'Past 7 Days (Fresh)';
+      }
+    }
+
+    const AVATAR_METADATA = {
+      none: {
+        name: 'Product Motion Only',
+        badge: 'No Presenter',
+        title: 'Cinematic dynamic product cards and active ingredient overlays only.',
+        voice: 'Voiceover Only',
+        img: '/api/stream/image/test_rose_card.jpg'
+      },
+      ayesha_derm: {
+        name: 'Dr. Ayesha Khan',
+        badge: 'MBBS, FCPS',
+        title: 'Senior Consultant Dermatologist • Clinical Authority',
+        voice: 'Urdu Female (Uzma)',
+        img: '/api/stream/avatar/ayesha_derm.jpg'
+      },
+      uzma_creator: {
+        name: 'Uzma Siddiqui',
+        badge: 'Beauty Creator',
+        title: 'Skincare & Lifestyle Creator • Glow Routine & Aesthetics',
+        voice: 'Urdu Female (Uzma)',
+        img: '/api/stream/avatar/uzma_creator.jpg'
+      },
+      zara_herbal: {
+        name: 'Zara Noor',
+        badge: 'Botanical Certified',
+        title: 'Herbal & Organic Skincare Advisor • Clean Natural Beauty',
+        voice: 'Urdu Female (Uzma / Gul)',
+        img: '/api/stream/avatar/zara_herbal.jpg'
+      },
+      asad_grooming: {
+        name: 'Asad Malik',
+        badge: "Men's Grooming Pro",
+        title: "Men's Care & Beard Specialist • Charcoal & Precision",
+        voice: 'Urdu Male (Asad)',
+        img: '/api/stream/avatar/asad_grooming.jpg'
+      },
+      bilal_fitness: {
+        name: 'Bilal Ahmed',
+        badge: 'Active Lifestyle',
+        title: 'Fitness & Grooming Creator • High Energy & Daily Hustle',
+        voice: 'Urdu Male (Asad)',
+        img: '/api/stream/avatar/bilal_fitness.jpg'
+      },
+      tariq_cosmo: {
+        name: 'Dr. Farhan Tariq',
+        badge: 'Chief Cosmetologist',
+        title: 'Aesthetic Cosmetologist & Formula Specialist • Anti-Aging Science',
+        voice: 'Urdu Male (Salman / Asad)',
+        img: '/api/stream/avatar/tariq_cosmo.jpg'
+      }
+    };
+
+    function onAvatarSelectionChange() {
+      const char = document.getElementById('in_avatar_character').value;
+      const meta = AVATAR_METADATA[char] || AVATAR_METADATA.none;
+      const pill = document.getElementById('avatarProfilePill');
+      if (pill) {
+        document.getElementById('avatarPreviewName').innerText = meta.name;
+        document.getElementById('avatarPreviewBadge').innerText = meta.badge;
+        document.getElementById('avatarPreviewTitle').innerText = meta.title;
+        document.getElementById('avatarVoiceHint').innerText = meta.voice;
+        document.getElementById('avatarPreviewImg').src = meta.img;
+      }
+      const voiceEl = document.getElementById('in_voice');
+      if (['asad_grooming', 'bilal_fitness', 'tariq_cosmo'].includes(char)) {
+        if (voiceEl && voiceEl.value === 'uzma_pk') {
+          voiceEl.value = 'asad_pk';
+        }
+      } else if (['ayesha_derm', 'uzma_creator', 'zara_herbal'].includes(char)) {
+        if (voiceEl && voiceEl.value === 'asad_pk') {
+          voiceEl.value = 'uzma_pk';
+        }
+      }
+    }
+
+    function switchRadarTab(tabKey) {
+      window.currentRadarTab = tabKey;
+      const tabs = ['women_skincare', 'men_grooming', 'women_fashion', 'men_fashion'];
+      tabs.forEach(t => {
+        const btn = document.getElementById(`tab_${t}`);
+        if (btn) {
+          if (t === tabKey) {
+            btn.className = 'px-3 py-1.5 rounded-xl font-semibold bg-rose-500 text-white shadow-sm transition';
+          } else {
+            btn.className = 'px-3 py-1.5 rounded-xl font-semibold bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 transition';
+          }
+        }
+      });
+      renderRadarCards();
+    }
+
+    function renderRadarCards() {
+      if (!window.radarData || !window.radarData.categories) return;
+      const grid = document.getElementById('radarCardsGrid');
+      grid.innerHTML = '';
+      const list = window.radarData.categories[window.currentRadarTab] || [];
+      list.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'p-4 rounded-2xl bg-white border border-slate-200 shadow-sm hover:border-rose-300 hover:shadow-md transition flex flex-col justify-between space-y-3';
+        card.innerHTML = `
+          <div>
+            <div class="flex items-center justify-between">
+              <span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded bg-slate-100 text-slate-700">${item.form.replace('_', ' ')}</span>
+              <span class="text-[10px] font-semibold text-rose-600 bg-rose-50 px-2 py-0.5 rounded">Trending Spike</span>
+            </div>
+            <h4 class="font-bold text-slate-800 text-xs mt-2">${item.title}</h4>
+            <p class="text-[11px] text-slate-500 mt-1 leading-snug">${item.tagline}</p>
+            <div class="flex flex-wrap gap-1 mt-2">
+              ${(item.tags || []).map(t => `<span class="text-[9px] text-slate-400 font-medium">${t}</span>`).join(' ')}
+            </div>
+          </div>
+          <button type="button" class="btnUseTrend w-full py-2 px-2 bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs rounded-xl shadow-xs transition flex items-center justify-center">
+            Use This Trend
+          </button>
+        `;
+        card.querySelector('.btnUseTrend').addEventListener('click', () => useRadarTrend(item));
+        grid.appendChild(card);
+      });
+    }
+
+    function useRadarTrend(item) {
+      document.getElementById('in_prompt').value = item.title;
+      document.getElementById('in_category').value = item.category;
+      document.getElementById('in_gender').value = item.target_gender;
+      
+      if (item.form === 'fashion_clothing') {
+        document.getElementById('in_action').value = 'fashion_walk';
+      } else if (item.target_gender === 'men') {
+        document.getElementById('in_action').value = 'beard_grooming';
+      } else {
+        document.getElementById('in_action').value = 'face_application';
+      }
+      
+      const promptEl = document.getElementById('in_prompt');
+      promptEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      promptEl.classList.add('ring-2', 'ring-rose-400', 'bg-rose-50/30');
+      setTimeout(() => {
+        promptEl.classList.remove('ring-2', 'ring-rose-400', 'bg-rose-50/30');
+      }, 1500);
+    }
+
+    function updateApiKeyPlaceholder() {
+      const model = document.getElementById('in_ai_model').value;
+      const keyInput = document.getElementById('in_api_key');
+      const helpText = document.getElementById('apiKeyHelpText');
+      const toggleLabel = document.getElementById('apiToggleLabel');
+      const sec = document.getElementById('apiKeySection');
+      
+      if (model.startsWith('claude')) {
+        keyInput.placeholder = 'Paste Anthropic Claude API Key (sk-ant-...) or leave blank for Free Simulation...';
+        if (helpText) helpText.innerText = 'Anthropic Claude requires ANTHROPIC_API_KEY. If blank, Auto-Smart Engine synthesizes human script.';
+        if (toggleLabel && sec.classList.contains('hidden')) {
+          toggleLabel.innerText = 'Add Anthropic Claude API Key (Optional)';
+        }
+      } else if (model.startsWith('gpt')) {
+        keyInput.placeholder = 'Paste OpenAI API Key (sk-...) or leave blank for Free Simulation...';
+        if (helpText) helpText.innerText = 'OpenAI GPT requires OPENAI_API_KEY. If blank, Auto-Smart Engine synthesizes human script.';
+        if (toggleLabel && sec.classList.contains('hidden')) {
+          toggleLabel.innerText = 'Add OpenAI GPT API Key (Optional)';
+        }
+      } else if (model === 'gemini_flash') {
+        keyInput.placeholder = 'Paste Google Gemini API Key (AIza...) or leave blank for Free Simulation...';
+        if (helpText) helpText.innerText = 'Gemini requires GEMINI_API_KEY. If blank, Auto-Smart Engine synthesizes human script.';
+        if (toggleLabel && sec.classList.contains('hidden')) {
+          toggleLabel.innerText = 'Add Google Gemini API Key (Optional)';
+        }
+      } else if (model === 'auto_smart') {
+        keyInput.placeholder = 'No API key needed for Free Auto-Smart Neural Engine...';
+        if (helpText) helpText.innerText = '100% Free built-in local engine with autonomous creative angles.';
+        if (toggleLabel && sec.classList.contains('hidden')) {
+          toggleLabel.innerText = 'Add API Key (OpenAI / Claude / Groq / Gemini - Optional)';
+        }
+      } else {
+        keyInput.placeholder = 'Paste Groq API Key (gsk_...) or leave blank for Free Simulation...';
+        if (helpText) helpText.innerText = 'Groq cloud API key. If blank, Auto-Smart Engine synthesizes human script.';
+        if (toggleLabel && sec.classList.contains('hidden')) {
+          toggleLabel.innerText = 'Add Groq API Key (Optional)';
+        }
+      }
+    }
+
+    function toggleApiKeyInput() {
+      const sec = document.getElementById('apiKeySection');
+      sec.classList.toggle('hidden');
+      const label = document.getElementById('apiToggleLabel');
+      if (sec.classList.contains('hidden')) {
+        updateApiKeyPlaceholder();
+      } else {
+        label.innerText = 'Hide API Key Input';
+      }
+    }
+
+    // Schedule Post Engine (Option 3)
+    let schedulingItemId = null;
+    let scheduleTimingMode = 'optimal';
+
+    function openScheduleModal(itemId = null) {
+      schedulingItemId = itemId || (activeItem ? activeItem.id : null);
+      if (!schedulingItemId) {
+        showToast('Please select or generate a video reel first', 'error');
+        return;
+      }
+      scheduleTimingMode = 'optimal';
+      setScheduleTiming('optimal');
+      document.getElementById('scheduleModal').classList.remove('hidden');
+    }
+
+    function closeScheduleModal() {
+      document.getElementById('scheduleModal').classList.add('hidden');
+      schedulingItemId = null;
+    }
+
+    function setScheduleTiming(mode) {
+      scheduleTimingMode = mode;
+      const btnOpt = document.getElementById('btnSchOptimal');
+      const btnCst = document.getElementById('btnSchCustom');
+      const customBox = document.getElementById('schCustomTimeBox');
+      if (mode === 'optimal') {
+        btnOpt.className = 'p-2.5 rounded-xl border-2 border-rose-500 bg-rose-50/50 text-rose-700 font-bold text-left transition';
+        btnCst.className = 'p-2.5 rounded-xl border border-slate-200 bg-white text-slate-700 font-bold text-left hover:bg-slate-50 transition';
+        customBox.classList.add('hidden');
+      } else {
+        btnOpt.className = 'p-2.5 rounded-xl border border-slate-200 bg-white text-slate-700 font-bold text-left hover:bg-slate-50 transition';
+        btnCst.className = 'p-2.5 rounded-xl border-2 border-rose-500 bg-rose-50/50 text-rose-700 font-bold text-left transition';
+        customBox.classList.remove('hidden');
+      }
+    }
+
+    async function submitSchedule() {
+      if (!schedulingItemId) return;
+      const platform = document.getElementById('schPlatform').value;
+      let targetTime = 'Today 8:00 PM PKT';
+      if (scheduleTimingMode === 'custom') {
+        const val = document.getElementById('schDateTime').value;
+        if (val) targetTime = val.replace('T', ' ');
+      }
+      
+      const btn = document.getElementById('btnConfirmSchedule');
+      const oldText = btn.innerText;
+      btn.innerText = 'Scheduling...';
+      btn.disabled = true;
+
+      try {
+        const res = await fetch(`/api/schedule/${schedulingItemId}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            platform: platform,
+            scheduled_time: targetTime
+          })
+        });
+        const data = await res.json();
+        if (res.ok) {
+          showToast(`Reel scheduled successfully for ${platform} (${targetTime})!`, 'success');
+          closeScheduleModal();
+          if (activeItem && activeItem.id === schedulingItemId) {
+            activeItem.status = 'Scheduled';
+            activeItem.scheduled_platform = platform;
+            showVideo(activeItem);
+          }
+          loadVaultData();
+        } else {
+          showToast('Scheduling failed: ' + (data.detail || 'Error'), 'error');
+        }
+      } catch (err) {
+        showToast('Failed to schedule: ' + err, 'error');
+      } finally {
+        btn.innerText = oldText;
+        btn.disabled = false;
+      }
+    }
+
+    // ============================================================
+    // INK WASH THEME ENGINE (Light & Dark Mode with Persistence)
+    // ============================================================
+    function initTheme() {
+      const savedTheme = localStorage.getItem('ink_wash_theme') || 'light';
+      setTheme(savedTheme);
+    }
+
+    function toggleTheme() {
+      const current = document.documentElement.getAttribute('data-theme') || 'light';
+      const next = current === 'light' ? 'dark' : 'light';
+      setTheme(next);
+    }
+
+    function setTheme(mode) {
+      document.documentElement.setAttribute('data-theme', mode);
+      localStorage.setItem('ink_wash_theme', mode);
+      const icon = document.getElementById('themeToggleIcon');
+      const text = document.getElementById('themeToggleText');
+      if (icon && text) {
+        if (mode === 'dark') {
+          icon.innerText = '☀️';
+          text.innerText = 'Light Mode';
+        } else {
+          icon.innerText = '🌙';
+          text.innerText = 'Dark Mode';
+        }
+      }
+    }
+
+    // Initial loads
+    initTheme();
+    initDateInputs();
+    loadRadarTrends();
+    loadLatestVideo();
+    loadVoicesData();
+    loadSupermodelsCatalog();
+    initVideoEngineConfig();
+  </script>
+
+  <!-- Schedule Post Modal (Ink Wash Neutral Surface) -->
+  <div id="scheduleModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-xs p-4">
+    <div class="clean-card rounded-3xl max-w-md w-full p-6 shadow-2xl border border-[var(--border)] space-y-4">
+      <div class="flex items-center justify-between border-b border-[var(--border-subtle)] pb-3">
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-xl bg-[var(--surface-alt)] text-[var(--accent)] border border-[var(--border)] flex items-center justify-center">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+          </div>
+          <h3 class="font-bold text-[var(--text-primary)] text-sm">Schedule Automated Social Post</h3>
+        </div>
+        <button onclick="closeScheduleModal()" class="text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <div class="space-y-3 text-xs">
+        <div>
+          <label class="block font-bold text-[var(--text-primary)] mb-1">Target Social Platform</label>
+          <select id="schPlatform" class="w-full p-2.5 rounded-xl border border-[var(--border)] text-xs text-[var(--text-primary)] bg-[var(--surface-alt)] focus:outline-none focus:border-[var(--accent)]">
+            <option value="Instagram Reels">Instagram Reels (9:16 Vertical Video)</option>
+            <option value="TikTok Pakistan">TikTok (For You Page Feed)</option>
+            <option value="Facebook Reels">Facebook Reels (Viral Meta Reach)</option>
+            <option value="YouTube Shorts">YouTube Shorts (Vertical Feed)</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block font-bold text-[var(--text-primary)] mb-1">Post Timing Window</label>
+          <div class="grid grid-cols-2 gap-2">
+            <button type="button" onclick="setScheduleTiming('optimal')" id="btnSchOptimal" class="p-2.5 rounded-xl border border-[var(--accent)] bg-[var(--surface-alt)] text-[var(--accent)] font-bold text-left transition">
+              <span class="block">Optimal Peak Time</span>
+              <span class="text-[10px] font-normal text-[var(--text-secondary)]">Today 8:00 PM PKT (High Traffic)</span>
+            </button>
+            <button type="button" onclick="setScheduleTiming('custom')" id="btnSchCustom" class="p-2.5 rounded-xl border border-[var(--border)] bg-[var(--surface)] text-[var(--text-secondary)] font-bold text-left hover:bg-[var(--surface-alt)] transition">
+              <span class="block">Custom Time</span>
+              <span class="text-[10px] font-normal text-[var(--text-secondary)]">Choose specific date & hour</span>
+            </button>
+          </div>
+        </div>
+
+        <div id="schCustomTimeBox" class="hidden space-y-1">
+          <label class="block font-bold text-[var(--text-secondary)] text-[11px]">Choose Date & Time (PKT):</label>
+          <input type="datetime-local" id="schDateTime" class="w-full p-2 rounded-xl border border-[var(--border)] text-xs text-[var(--text-primary)] bg-[var(--surface-alt)]">
+        </div>
+
+        <div class="p-3 rounded-2xl bg-[var(--surface-alt)] border border-[var(--border)] space-y-1">
+          <span class="font-bold text-[var(--text-primary)] block">Publication Package Includes:</span>
+          <p class="text-[11px] text-[var(--text-secondary)] leading-relaxed">
+            Burned-in Urdu voiceover, high-converting copy, hashtags, bio CTA link, and compliance-checked video reel.
+          </p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2 pt-2 border-t border-[var(--border-subtle)]">
+        <button onclick="closeScheduleModal()" class="flex-1 py-2.5 rounded-xl bg-[var(--surface)] hover:bg-[var(--surface-alt)] text-[var(--text-primary)] border border-[var(--border)] font-semibold text-xs transition">
+          Cancel
+        </button>
+        <button id="btnConfirmSchedule" onclick="submitSchedule()" class="flex-1 py-2.5 rounded-xl btn-primary-accent font-semibold text-xs shadow-xs transition flex items-center justify-center gap-1.5 cursor-pointer">
+          Confirm Schedule
+        </button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

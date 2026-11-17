@@ -1,0 +1,242 @@
+/* ==========================================================================
+   INK WASH DESIGN SYSTEM - AI SAAS DESIGN TOKENS & GLOBAL THEME
+   Philosophy: Clean, minimal, high-contrast, gallery-like feel.
+   Strictly neutral (ivory, charcoal, gray) with Indigo/Accent as the ONLY color.
+   ========================================================================== */
+
+:root,
+[data-theme="light"] {
+  /* LIGHT THEME */
+  --bg: #F7F5F0;                 /* soft ivory, page background */
+  --surface: #FFFFFF;            /* cards, modals */
+  --surface-alt: #EFEDE8;        /* sidebar, input backgrounds, hover states */
+  --text-primary: #1C1C1E;       /* charcoal */
+  --text-secondary: #6B7280;     /* cool gray (WCAG AA >= 4.5:1) */
+  --border: #D1D5DB;             /* subtle neutral border */
+  --border-subtle: #E5E7EB;
+  
+  /* ACCENT (Used ONLY for AI elements, primary buttons, active items) */
+  --accent: #4F46E5;             /* indigo */
+  --accent-hover: #4338CA;
+  --accent-contrast: #FFFFFF;    /* text on accent */
+  --accent-muted: rgba(79, 70, 229, 0.08);
+  --accent-ring: rgba(79, 70, 229, 0.25);
+
+  /* SEMANTIC COLOURS */
+  --success: #16A34A;
+  --success-bg: rgba(22, 163, 74, 0.1);
+  --warning: #D97706;
+  --warning-bg: rgba(217, 119, 6, 0.1);
+  --error: #DC2626;
+  --error-bg: rgba(220, 38, 38, 0.1);
+
+  /* SHADOWS (Subtle & soft, replacing heavy gradients) */
+  --shadow-sm: 0 1px 2px 0 rgba(28, 28, 30, 0.05);
+  --shadow-md: 0 4px 12px -2px rgba(28, 28, 30, 0.06), 0 2px 4px -2px rgba(28, 28, 30, 0.04);
+  --shadow-lg: 0 12px 24px -4px rgba(28, 28, 30, 0.08);
+}
+
+[data-theme="dark"] {
+  /* DARK THEME */
+  --bg: #131314;
+  --surface: #1C1C1E;
+  --surface-alt: #26262A;
+  --text-primary: #F7F5F0;
+  --text-secondary: #9CA3AF;     /* cool gray (WCAG AA >= 4.5:1) */
+  --border: #33333A;
+  --border-subtle: #242428;
+
+  /* ACCENT */
+  --accent: #818CF8;
+  --accent-hover: #A5B4FC;
+  --accent-contrast: #131314;    /* charcoal text on luminous indigo */
+  --accent-muted: rgba(129, 140, 248, 0.12);
+  --accent-ring: rgba(129, 140, 248, 0.35);
+
+  /* SEMANTIC COLOURS */
+  --success: #22C55E;
+  --success-bg: rgba(34, 197, 94, 0.14);
+  --warning: #F59E0B;
+  --warning-bg: rgba(245, 158, 11, 0.14);
+  --error: #EF4444;
+  --error-bg: rgba(239, 68, 68, 0.14);
+
+  /* SHADOWS */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 12px -2px rgba(0, 0, 0, 0.5), 0 2px 4px -2px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 12px 24px -4px rgba(0, 0, 0, 0.65);
+}
+
+/* Base Body Styles */
+body {
+  background-color: var(--bg);
+  color: var(--text-primary);
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* ==========================================================================
+   COMPONENT STYLES (Zero hardcoded colors, 100% token driven)
+   ========================================================================== */
+
+/* Cards & Surfaces */
+.iw-card {
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+.iw-card:hover {
+  box-shadow: var(--shadow-md);
+  border-color: var(--border);
+}
+
+.iw-surface-alt {
+  background-color: var(--surface-alt);
+}
+
+/* Primary Button (Accent ONLY) */
+.iw-btn-primary {
+  background-color: var(--accent);
+  color: var(--accent-contrast);
+  font-weight: 600;
+  border: 1px solid transparent;
+  box-shadow: var(--shadow-sm);
+  transition: background-color 0.15s ease, transform 0.05s ease;
+}
+.iw-btn-primary:hover {
+  background-color: var(--accent-hover);
+}
+.iw-btn-primary:active {
+  transform: scale(0.99);
+}
+
+/* Secondary Button (Outlined with --border, NO accent fill) */
+.iw-btn-secondary {
+  background-color: var(--surface);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+  font-weight: 600;
+  box-shadow: var(--shadow-sm);
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+.iw-btn-secondary:hover {
+  background-color: var(--surface-alt);
+  border-color: var(--text-secondary);
+}
+
+/* Tertiary / Subtle Action */
+.iw-btn-subtle {
+  background-color: transparent;
+  color: var(--text-secondary);
+  border: 1px solid transparent;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+.iw-btn-subtle:hover {
+  background-color: var(--surface-alt);
+  color: var(--text-primary);
+}
+
+/* Sidebar Navigation */
+.iw-sidebar {
+  background-color: var(--surface-alt);
+  border-right: 1px solid var(--border);
+}
+.iw-nav-item {
+  color: var(--text-secondary);
+  border: 1px solid transparent;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+.iw-nav-item:hover {
+  background-color: var(--surface);
+  color: var(--text-primary);
+  border-color: var(--border);
+}
+.iw-nav-item.active {
+  background-color: var(--surface);
+  color: var(--accent);
+  border-color: var(--border);
+  font-weight: 700;
+  box-shadow: var(--shadow-sm);
+}
+
+/* Form Controls & Inputs */
+.iw-input {
+  background-color: var(--surface-alt);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+}
+.iw-input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-ring);
+}
+.iw-input::placeholder {
+  color: var(--text-secondary);
+}
+
+/* AI Element Badges (Using Accent strictly for AI status) */
+.iw-ai-badge {
+  background-color: var(--accent-muted);
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  font-weight: 600;
+}
+
+/* AI Progress Bar & Loading Indicator */
+.iw-progress-container {
+  background-color: var(--surface-alt);
+  border: 1px solid var(--border);
+}
+.iw-progress-fill {
+  background-color: var(--accent);
+  transition: width 0.3s ease;
+}
+.iw-ai-pulse {
+  background-color: var(--accent);
+}
+
+/* Semantic Badges */
+.iw-badge-success {
+  background-color: var(--success-bg);
+  color: var(--success);
+  border: 1px solid var(--success);
+}
+.iw-badge-warning {
+  background-color: var(--warning-bg);
+  color: var(--warning);
+  border: 1px solid var(--warning);
+}
+.iw-badge-error {
+  background-color: var(--error-bg);
+  color: var(--error);
+  border: 1px solid var(--error);
+}
+
+/* Modals & Dialogs */
+.iw-modal-backdrop {
+  background-color: rgba(19, 19, 20, 0.6);
+  backdrop-filter: blur(4px);
+}
+.iw-modal {
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-lg);
+  color: var(--text-primary);
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-secondary);
+}

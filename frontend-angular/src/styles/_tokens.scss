@@ -1,0 +1,73 @@
+// ==========================================================================
+// INK WASH DESIGN SYSTEM - ANGULAR DESIGN TOKENS
+// Gallery-like, minimal, high-contrast, strictly neutral with single accent.
+// ==========================================================================
+
+// Light Theme Tokens
+$light-bg: #F7F5F0;
+$light-surface: #FFFFFF;
+$light-surface-alt: #EFEDE8;
+$light-text-primary: #1C1C1E;
+$light-text-secondary: #6B7280;
+$light-border: #D1D5DB;
+$light-accent: #4F46E5;
+$light-accent-hover: #4338CA;
+$light-accent-contrast: #FFFFFF;
+
+// Dark Theme Tokens
+$dark-bg: #131314;
+$dark-surface: #1C1C1E;
+$dark-surface-alt: #26262A;
+$dark-text-primary: #F7F5F0;
+$dark-text-secondary: #9CA3AF;
+$dark-border: #33333A;
+$dark-accent: #818CF8;
+$dark-accent-hover: #A5B4FC;
+$dark-accent-contrast: #131314;
+
+// Semantic Feedback Tokens (Separate from Accent)
+$color-success: #16A34A;
+$color-warning: #D97706;
+$color-error: #DC2626;
+
+// CSS Variables Definition
+:root,
+[data-theme="light"] {
+  --bg: #{$light-bg};
+  --surface: #{$light-surface};
+  --surface-alt: #{$light-surface-alt};
+  --text-primary: #{$light-text-primary};
+  --text-secondary: #{$light-text-secondary};
+  --border: #{$light-border};
+  --accent: #{$light-accent};
+  --accent-hover: #{$light-accent-hover};
+  --accent-contrast: #{$light-accent-contrast};
+
+  --success: #{$color-success};
+  --warning: #{$color-warning};
+  --error: #{$color-error};
+
+  --shadow-sm: 0 1px 2px 0 rgba(28, 28, 30, 0.05);
+  --shadow-md: 0 4px 12px -2px rgba(28, 28, 30, 0.06), 0 2px 4px -2px rgba(28, 28, 30, 0.04);
+  --shadow-lg: 0 12px 24px -4px rgba(28, 28, 30, 0.08);
+}
+
+[data-theme="dark"] {
+  --bg: #{$dark-bg};
+  --surface: #{$dark-surface};
+  --surface-alt: #{$dark-surface-alt};
+  --text-primary: #{$dark-text-primary};
+  --text-secondary: #{$dark-text-secondary};
+  --border: #{$dark-border};
+  --accent: #{$dark-accent};
+  --accent-hover: #{$dark-accent-hover};
+  --accent-contrast: #{$dark-accent-contrast};
+
+  --success: #22C55E;
+  --warning: #F59E0B;
+  --error: #EF4444;
+
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 12px -2px rgba(0, 0, 0, 0.5), 0 2px 4px -2px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 12px 24px -4px rgba(0, 0, 0, 0.65);
+}
